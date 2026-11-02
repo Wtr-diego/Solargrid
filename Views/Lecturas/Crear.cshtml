@@ -1,0 +1,14 @@
+@model LecturaVm
+@{ ViewData["Title"] = "Nueva lectura"; }
+<section class="tarjeta formulario">
+    <h1>Registrar lectura de energía</h1>
+    <p class="secundario">Ingresa los datos de generación y consumo de forma manual.</p>
+    <form asp-action="Crear" method="post">
+        <div asp-validation-summary="ModelOnly" class="errores"></div>
+        <label asp-for="IdSistema">Sistema solar</label><select asp-for="IdSistema" asp-items="ViewBag.Sistemas"><option value="0">Selecciona un sistema</option></select><span asp-validation-for="IdSistema" class="errores"></span>
+        <label asp-for="FechaHora">Fecha y hora de la lectura</label><input asp-for="FechaHora" type="datetime-local" value="@Model.FechaHora.ToString("yyyy-MM-ddTHH:mm")" /><span asp-validation-for="FechaHora" class="errores"></span>
+        <label asp-for="GeneracionKwh">Energía generada (kWh)</label><input asp-for="GeneracionKwh" type="number" step="0.01" /><span asp-validation-for="GeneracionKwh" class="errores"></span>
+        <label asp-for="ConsumoKwh">Energía consumida (kWh)</label><input asp-for="ConsumoKwh" type="number" step="0.01" /><span asp-validation-for="ConsumoKwh" class="errores"></span>
+        <div class="acciones"><button class="boton boton-primario" type="submit">Guardar lectura</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div>
+    </form>
+</section>

@@ -1,0 +1,13 @@
+@model ComunidadVm
+@{ ViewData["Title"] = "Nueva comunidad"; }
+<section class="tarjeta formulario">
+    <h1>Registrar comunidad</h1>
+    <p class="secundario">Completa la información para agregar una comunidad.</p>
+    <form asp-action="Crear" method="post">
+        <div asp-validation-summary="ModelOnly" class="errores"></div>
+        <label asp-for="Nombre">Nombre de la comunidad</label><input asp-for="Nombre" /><span asp-validation-for="Nombre" class="errores"></span>
+        <label asp-for="Ubicacion">Ubicación</label><input asp-for="Ubicacion" /><span asp-validation-for="Ubicacion" class="errores"></span>
+        <label asp-for="Estado">Estado</label><select asp-for="Estado"><option value="Activa">Activa</option><option value="Inactiva">Inactiva</option></select><span asp-validation-for="Estado" class="errores"></span>
+        <div class="acciones"><button class="boton boton-primario" type="submit">Guardar comunidad</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div>
+    </form>
+</section>

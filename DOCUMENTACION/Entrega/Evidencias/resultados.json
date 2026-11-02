@@ -1,0 +1,250 @@
+[
+  {
+    "id": "P01",
+    "name": "Protección sin sesión",
+    "input": "GET /Equipos sin cookie",
+    "expected": "Redirigir a inicio de sesión",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Cuenta/Ingresar?ReturnUrl=%2FEquipos",
+    "observed": "☀ SolarGrid\n☀\nIniciar sesión\n\nAccede al panel de administración de energía solar comunitaria.\n\nCorreo electrónico\nContraseña\nEntrar al sistema\n\nPara la demostración utiliza las cuentas indicadas en el archivo LEEME.md.\n\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P01.png"
+  },
+  {
+    "id": "P02",
+    "name": "Credenciales inválidas",
+    "input": "Administrador con contraseña incorrecta",
+    "expected": "Correo o contraseña incorrectos",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Cuenta/Ingresar",
+    "observed": "☀ SolarGrid\n☀\nIniciar sesión\n\nAccede al panel de administración de energía solar comunitaria.\n\nCorreo o contraseña incorrectos.\nCorreo electrónico\nContraseña\nEntrar al sistema\n\nPara la demostración utiliza las cuentas indicadas en el archivo LEEME.md.\n\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P02.png"
+  },
+  {
+    "id": "P03",
+    "name": "Inicio de sesión y panel",
+    "input": "Cuenta de demostración Administrador",
+    "expected": "Panel principal con indicadores",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nSOLARGRID · DEMOSTRACIÓN\nPanel principal\n\nControl sencillo de energía solar para comunidades rurales.\n\nAdministrador\nComunidades\n2\nRegistradas\nSistemas solares\n2\nInstalados\nEquipos\n5\nEn inventario\nLecturas\n20\nRegistros de energía\nProblemas activos\n2\nAbiertos o en proceso\nAcciones rápidas\nComunidades\nSistemas\nNuevo equipo\nNueva lectura\nReportar incidencia\nVer reporte\nÚltimas lecturas de energía\nFECHA\tSISTEMA\tGENERACIÓN\tCONSUMO\n26/10/2026\tSistema Solar El Pinar\t39.00 kWh\t21.80 kWh\n26/10/2026\tSistema Solar Las Flores\t27.60 kWh\t16.00 kWh\n25/10/2026\tSistema Solar El Pinar\t37.50 kWh\t21.20 kWh\n25/10/2026\tSistema Solar Las Flores\t26.40 kWh\t15.50 kWh\n24/10/2026\tSistema Solar El Pinar\t36.00 kWh\t20.60 kWh\nLos datos iniciales son de ejemplo para presentar el proyecto. Las lecturas se ingresan manualmente; el sitio no se conecta a paneles reales.\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P03.png"
+  },
+  {
+    "id": "P04",
+    "name": "Crear comunidad",
+    "input": "Comunidad QA 20261027; Chalatenango; Activa",
+    "expected": "Registro visible y confirmación",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Comunidades",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nComunidad registrada correctamente.\nSOLARGRID · MAPA INTERACTIVO\nComunidades\n\nSelecciona en el mapa el lugar donde está cada panel solar. Sus ubicaciones quedan guardadas.\n\n+ Nueva comunidad\nComunidades\n3\nPaneles registrados\n2\nCon ubicación\n0\nPendientes de ubicar\n2\nMapa de paneles solares\n\nLos marcadores muestran los paneles con ubicación guardada. Si es un panel antiguo, selecciónalo y haz clic sobre su posición.\n\nMostrar comunidad\nTodas las comunidades\nComunidad El Pinar\nComunidad Las Flores\nComunidad QA 20261027\n+\n−\n Leaflet | © OpenStreetMap contributors\n\nAcerca el mapa, selecciona un panel y haz clic en el lugar exacto. El mapa necesita conexión a Internet; las ubicaciones quedan en SQL Server.\n\nUbicar un panel\n\n1. Escoge un panel de los que ya registraste.\n2. Marca su ubicación en el mapa.\n3. Pulsa «Guardar ubicación».\n\nPanel solar\nSelecciona un panel\nPAN-001 — Comunidad El Pinar\nPAN-002 — Comunidad Las Flores\n\nSelecciona un panel para comenzar.\n\nLatitud\n—\nLongitud\n—\nGuardar ubicación\nQuitar ubicación del panel\n\nQuitar una ubicación no elimina el equipo. Puedes volver a marcarlo cuando quieras.\n\nPaneles que ya están registrados\n2 paneles\nPAN-001\nComunidad El Pinar · Sistema Solar El Pinar\nSin ubicación\nUbicar\nPAN-002\nComunidad Las Flores · Sistema Solar Las Flores\nSin ubicación\nUbicar\nListado de comunidades\nID\tNOMBRE\tUBICACIÓN\tESTADO\t\n1\tComunidad El Pinar\tChalatenango\tActiva\tEditar\n2\tComunidad Las Flores\tLa Palma\tActiva\tEditar\n3\tComunidad QA 20261027\tChalatenango\tActiva\tEditar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P04.png"
+  },
+  {
+    "id": "P05",
+    "name": "Nombre duplicado",
+    "input": "Mismo nombre de P04",
+    "expected": "Rechazar duplicado",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Comunidades/Crear",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRegistrar comunidad\n\nCompleta la información para agregar una comunidad.\n\nNombre de la comunidad\nYa existe una comunidad con ese nombre.\nUbicación\nEstado\nActiva\nInactiva\nGuardar comunidad\nCancelar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P05.png"
+  },
+  {
+    "id": "P06",
+    "name": "Crear sistema",
+    "input": "Comunidad QA; Sistema QA; 5 kW; 20/10/2026",
+    "expected": "Sistema registrado y relacionado",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Sistemas",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nSistema solar registrado correctamente.\nSistemas solares\n\nEquipos principales instalados en las comunidades.\n\n+ Nuevo sistema\nID\tNOMBRE\tCOMUNIDAD\tINSTALACIÓN\tCAPACIDAD\tESTADO\n3\tSistema QA\tComunidad QA 20261027\t20/10/2026\t5.00 kW\tOperativo\n1\tSistema Solar El Pinar\tComunidad El Pinar\t27/04/2026\t10.00 kW\tOperativo\n2\tSistema Solar Las Flores\tComunidad Las Flores\t27/07/2026\t7.50 kW\tEn mantenimiento\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P06.png"
+  },
+  {
+    "id": "P07",
+    "name": "Crear equipo",
+    "input": "QA-PAN-003; Panel; Sistema QA",
+    "expected": "Equipo visible en inventario",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Equipos",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nEquipo registrado correctamente.\nINVENTARIO\nEquipos solares\n\nPaneles, baterías, inversores y controladores registrados.\n\n+ Registrar equipo\nCÓDIGO\tTIPO\tMARCA / MODELO\tSISTEMA\tESTADO\t\nBAT-001\tBateria\tSolarDemo 48V\tSistema Solar El Pinar\tOperativo\tEditar\nBAT-002\tBateria\tSolarDemo 48V\tSistema Solar Las Flores\tEn mantenimiento\tEditar\nINV-001\tInversor\tSolarDemo 5kW\tSistema Solar El Pinar\tOperativo\tEditar\nPAN-001\tPanel\tSolarDemo 450W\tSistema Solar El Pinar\tOperativo\tEditar\nPAN-002\tPanel\tSolarDemo 450W\tSistema Solar Las Flores\tOperativo\tEditar\nQA-PAN-003\tPanel\tPrueba 450W\tSistema QA\tOperativo\tEditar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P07.png"
+  },
+  {
+    "id": "P08",
+    "name": "Código duplicado",
+    "input": "Repetir QA-PAN-003",
+    "expected": "Rechazo del código repetido",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Equipos/Crear",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRegistrar equipo\n\nAsigna el equipo a un sistema solar y ponle un código único.\n\nSistema solar\nSelecciona un sistema\nSistema QA\nSistema Solar El Pinar\nSistema Solar Las Flores\nCódigo único del equipo\nYa existe un equipo con ese código.\nTipo\nPanel\nBatería\nInversor\nControlador\nOtro\nMarca\nModelo\nEstado\nOperativo\nEn mantenimiento\nFuera de servicio\nGuardar equipo\nCancelar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P08.png"
+  },
+  {
+    "id": "P09",
+    "name": "Registrar energía",
+    "input": "Sistema QA; 20/10/2026 09:00; 30 y 20 kWh",
+    "expected": "Lectura guardada y visible",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Lecturas",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nLectura de energía registrada correctamente.\nLecturas de energía\n\nÚltimos 100 registros de generación y consumo.\n\n+ Registrar lectura\nFECHA\tSISTEMA\tGENERACIÓN (KWH)\tCONSUMO (KWH)\tREGISTRADO POR\n26/10/2026 09:00\tSistema Solar El Pinar\t39.00\t21.80\tTécnico de prueba\n26/10/2026 09:00\tSistema Solar Las Flores\t27.60\t16.00\tTécnico de prueba\n25/10/2026 09:00\tSistema Solar El Pinar\t37.50\t21.20\tTécnico de prueba\n25/10/2026 09:00\tSistema Solar Las Flores\t26.40\t15.50\tTécnico de prueba\n24/10/2026 09:00\tSistema Solar El Pinar\t36.00\t20.60\tTécnico de prueba\n24/10/2026 09:00\tSistema Solar Las Flores\t25.20\t15.00\tTécnico de prueba\n23/10/2026 09:00\tSistema Solar El Pinar\t34.50\t20.00\tTécnico de prueba\n23/10/2026 09:00\tSistema Solar Las Flores\t24.00\t14.50\tTécnico de prueba\n22/10/2026 09:00\tSistema Solar El Pinar\t33.00\t19.40\tTécnico de prueba\n22/10/2026 09:00\tSistema Solar Las Flores\t22.80\t14.00\tTécnico de prueba\n21/10/2026 09:00\tSistema Solar El Pinar\t31.50\t18.80\tTécnico de prueba\n21/10/2026 09:00\tSistema Solar Las Flores\t21.60\t13.50\tTécnico de prueba\n20/10/2026 09:00\tSistema Solar El Pinar\t30.00\t18.20\tTécnico de prueba\n20/10/2026 09:00\tSistema Solar Las Flores\t20.40\t13.00\tTécnico de prueba\n20/10/2026 09:00\tSistema QA\t30.00\t20.00\tAdministrador de prueba\n19/10/2026 09:00\tSistema Solar El Pinar\t28.50\t17.60\tTécnico de prueba\n19/10/2026 09:00\tSistema Solar Las Flores\t19.20\t12.50\tTécnico de prueba\n18/10/2026 09:00\tSistema Solar El Pinar\t27.00\t17.00\tTécnico de prueba\n18/10/2026 09:00\tSistema Solar Las Flores\t18.00\t12.00\tTécnico de prueba\n17/10/2026 09:00\tSistema Solar El Pinar\t25.50\t16.40\tTécnico de prueba\n17/10/2026 09:00\tSistema Solar Las Flores\t16.80\t11.50\tTécnico de prueba\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P09.png"
+  },
+  {
+    "id": "P10",
+    "name": "Energía negativa",
+    "input": "Generación -5 kWh; consumo 20",
+    "expected": "Rechazar valor negativo",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Lecturas/Crear",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRegistrar lectura de energía\n\nIngresa los datos de generación y consumo de forma manual.\n\nSistema solar\nSelecciona un sistema\nSistema QA\nSistema Solar El Pinar\nSistema Solar Las Flores\nFecha y hora de la lectura\nEnergía generada (kWh)\nLa generación no puede ser negativa.\nEnergía consumida (kWh)\nGuardar lectura\nCancelar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P10.png"
+  },
+  {
+    "id": "P11",
+    "name": "Fecha futura",
+    "input": "01/01/2099 09:00",
+    "expected": "Rechazar fecha futura",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Lecturas/Crear",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRegistrar lectura de energía\n\nIngresa los datos de generación y consumo de forma manual.\n\nSistema solar\nSelecciona un sistema\nSistema QA\nSistema Solar El Pinar\nSistema Solar Las Flores\nFecha y hora de la lectura\nNo se permiten fechas futuras.\nEnergía generada (kWh)\nEnergía consumida (kWh)\nGuardar lectura\nCancelar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P11.png"
+  },
+  {
+    "id": "P12",
+    "name": "Registrar incidencia",
+    "input": "Sistema QA; panel sin generación; Alta",
+    "expected": "Incidencia en estado Abierta",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Incidencias",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nProblema reportado correctamente (estado: Abierta).\nSEGUIMIENTO\nIncidencias\n\nProblemas reportados y estado de atención.\n\n+ Reportar problema\nFECHA\tSISTEMA\tDESCRIPCIÓN\tPRIORIDAD\tESTADO\t\n27/10/2026\tSistema QA\tPrueba QA de panel sin generación\tAlta\tAbierta\tActualizar\n26/10/2026\tSistema Solar El Pinar\tRevisar la conexión de un panel.\tMedia\tAbierta\tActualizar\n24/10/2026\tSistema Solar Las Flores\tBatería con baja carga al final del día.\tAlta\tEn proceso\tActualizar\n20/10/2026\tSistema Solar El Pinar\tLimpieza preventiva de los paneles.\tBaja\tResuelta\tActualizar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P12.png"
+  },
+  {
+    "id": "P13",
+    "name": "Solución obligatoria",
+    "input": "Resuelta; solución vacía",
+    "expected": "Pedir solución antes de resolver",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Incidencias/Estado/4",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nDar seguimiento al problema\n\nSistema QA: Prueba QA de panel sin generación\n\nEstado actual\nAbierta\nEn proceso\nResuelta\nCerrada\nSolución / observaciones\nEscribe la solución antes de resolver o cerrar.\nGuardar seguimiento\nCancelar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P13.png"
+  },
+  {
+    "id": "P14",
+    "name": "Resolver incidencia",
+    "input": "Resuelta con descripción de solución",
+    "expected": "Guardar nuevo estado",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Incidencias",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nEstado de incidencia actualizado.\nSEGUIMIENTO\nIncidencias\n\nProblemas reportados y estado de atención.\n\n+ Reportar problema\nFECHA\tSISTEMA\tDESCRIPCIÓN\tPRIORIDAD\tESTADO\t\n27/10/2026\tSistema QA\tPrueba QA de panel sin generación\tAlta\tResuelta\tActualizar\n26/10/2026\tSistema Solar El Pinar\tRevisar la conexión de un panel.\tMedia\tAbierta\tActualizar\n24/10/2026\tSistema Solar Las Flores\tBatería con baja carga al final del día.\tAlta\tEn proceso\tActualizar\n20/10/2026\tSistema Solar El Pinar\tLimpieza preventiva de los paneles.\tBaja\tResuelta\tActualizar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P14.png"
+  },
+  {
+    "id": "P15",
+    "name": "Reporte por fecha y sistema",
+    "input": "Sistema QA; 20/10/2026 a 20/10/2026",
+    "expected": "30 kWh generados; 20 consumidos; 1 lectura",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Reportes?desde=2026-10-20&hasta=2026-10-20&idSistema=3",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRESUMEN\nReporte de energía\n\nGeneración y consumo del período seleccionado.\n\nImprimir\nDesde\nHasta\nSistema\nTodos\nSistema QA\nSistema Solar El Pinar\nSistema Solar Las Flores\nConsultar\nGeneración total\n30.00 kWh\nEnergía registrada\nConsumo total\n20.00 kWh\nEnergía utilizada\nLecturas\n1\nTotal del período; se muestran hasta 500 filas\nDetalle del período\nFECHA\tSISTEMA\tGENERADA\tCONSUMIDA\n20/10/2026 09:00\tSistema QA\t30.00 kWh\t20.00 kWh\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P15.png"
+  },
+  {
+    "id": "P16",
+    "name": "Período invertido",
+    "input": "27/10/2026 a 01/10/2026",
+    "expected": "Rechazar intervalo",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Reportes?desde=2026-10-27&hasta=2026-10-01",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRESUMEN\nReporte de energía\n\nGeneración y consumo del período seleccionado.\n\nImprimir\nDesde\nHasta\nSistema\nTodos\nSistema QA\nSistema Solar El Pinar\nSistema Solar Las Flores\nConsultar\n\nLa fecha inicial no puede ser posterior a la fecha final.\n\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P16.png"
+  },
+  {
+    "id": "P17",
+    "name": "Guardar ubicación",
+    "input": "QA-PAN-003; 14.0445, -88.9334",
+    "expected": "Persistir coordenadas del panel",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Comunidades",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nSOLARGRID · MAPA INTERACTIVO\nComunidades\n\nSelecciona en el mapa el lugar donde está cada panel solar. Sus ubicaciones quedan guardadas.\n\n+ Nueva comunidad\nComunidades\n3\nPaneles registrados\n3\nCon ubicación\n1\nPendientes de ubicar\n2\nMapa de paneles solares\n\nLos marcadores muestran los paneles con ubicación guardada. Si es un panel antiguo, selecciónalo y haz clic sobre su posición.\n\nMostrar comunidad\nTodas las comunidades\nComunidad El Pinar\nComunidad Las Flores\nComunidad QA 20261027\n☀\n+\n−\n Leaflet | © OpenStreetMap contributors\n\nAcerca el mapa, selecciona un panel y haz clic en el lugar exacto. El mapa necesita conexión a Internet; las ubicaciones quedan en SQL Server.\n\nUbicar un panel\n\n1. Escoge un panel de los que ya registraste.\n2. Marca su ubicación en el mapa.\n3. Pulsa «Guardar ubicación».\n\nPanel solar\nSelecciona un panel\nPAN-001 — Comunidad El Pinar\nPAN-002 — Comunidad Las Flores\nQA-PAN-003 — Comunidad QA 20261027\n\nSelecciona un panel para comenzar.\n\nLatitud\n—\nLongitud\n—\nGuardar ubicación\nQuitar ubicación del panel\n\nQuitar una ubicación no elimina el equipo. Puedes volver a marcarlo cuando quieras.\n\nPaneles que ya están registrados\n3 paneles\nPAN-001\nComunidad El Pinar · Sistema Solar El Pinar\nSin ubicación\nUbicar\nPAN-002\nComunidad Las Flores · Sistema Solar Las Flores\nSin ubicación\nUbicar\nQA-PAN-003\nComunidad QA 20261027 · Sistema QA\nEn el mapa\nVer / mover\nListado de comunidades\nID\tNOMBRE\tUBICACIÓN\tESTADO\t\n1\tComunidad El Pinar\tChalatenango\tActiva\tEditar\n2\tComunidad Las Flores\tLa Palma\tActiva\tEditar\n3\tComunidad QA 20261027\tChalatenango\tActiva\tEditar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P17.png"
+  },
+  {
+    "id": "P18",
+    "name": "Coordenada inválida",
+    "input": "Latitud 100",
+    "expected": "Mantener coordenadas anteriores",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Comunidades",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nSOLARGRID · MAPA INTERACTIVO\nComunidades\n\nSelecciona en el mapa el lugar donde está cada panel solar. Sus ubicaciones quedan guardadas.\n\n+ Nueva comunidad\nComunidades\n3\nPaneles registrados\n3\nCon ubicación\n1\nPendientes de ubicar\n2\nMapa de paneles solares\n\nLos marcadores muestran los paneles con ubicación guardada. Si es un panel antiguo, selecciónalo y haz clic sobre su posición.\n\nMostrar comunidad\nTodas las comunidades\nComunidad El Pinar\nComunidad Las Flores\nComunidad QA 20261027\n☀\n+\n−\n Leaflet | © OpenStreetMap contributors\n\nAcerca el mapa, selecciona un panel y haz clic en el lugar exacto. El mapa necesita conexión a Internet; las ubicaciones quedan en SQL Server.\n\nUbicar un panel\n\n1. Escoge un panel de los que ya registraste.\n2. Marca su ubicación en el mapa.\n3. Pulsa «Guardar ubicación».\n\nPanel solar\nSelecciona un panel\nPAN-001 — Comunidad El Pinar\nPAN-002 — Comunidad Las Flores\nQA-PAN-003 — Comunidad QA 20261027\n\nSelecciona un panel para comenzar.\n\nLatitud\n—\nLongitud\n—\nGuardar ubicación\nQuitar ubicación del panel\n\nQuitar una ubicación no elimina el equipo. Puedes volver a marcarlo cuando quieras.\n\nPaneles que ya están registrados\n3 paneles\nPAN-001\nComunidad El Pinar · Sistema Solar El Pinar\nSin ubicación\nUbicar\nPAN-002\nComunidad Las Flores · Sistema Solar Las Flores\nSin ubicación\nUbicar\nQA-PAN-003\nComunidad QA 20261027 · Sistema QA\nEn el mapa\nVer / mover\nListado de comunidades\nID\tNOMBRE\tUBICACIÓN\tESTADO\t\n1\tComunidad El Pinar\tChalatenango\tActiva\tEditar\n2\tComunidad Las Flores\tLa Palma\tActiva\tEditar\n3\tComunidad QA 20261027\tChalatenango\tActiva\tEditar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P18.png"
+  },
+  {
+    "id": "P19",
+    "name": "Quitar ubicación",
+    "input": "QA-PAN-003",
+    "expected": "Conservar equipo y borrar solo ubicación",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Comunidades",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nSOLARGRID · MAPA INTERACTIVO\nComunidades\n\nSelecciona en el mapa el lugar donde está cada panel solar. Sus ubicaciones quedan guardadas.\n\n+ Nueva comunidad\nComunidades\n3\nPaneles registrados\n3\nCon ubicación\n0\nPendientes de ubicar\n3\nMapa de paneles solares\n\nLos marcadores muestran los paneles con ubicación guardada. Si es un panel antiguo, selecciónalo y haz clic sobre su posición.\n\nMostrar comunidad\nTodas las comunidades\nComunidad El Pinar\nComunidad Las Flores\nComunidad QA 20261027\n+\n−\n Leaflet | © OpenStreetMap contributors\n\nAcerca el mapa, selecciona un panel y haz clic en el lugar exacto. El mapa necesita conexión a Internet; las ubicaciones quedan en SQL Server.\n\nUbicar un panel\n\n1. Escoge un panel de los que ya registraste.\n2. Marca su ubicación en el mapa.\n3. Pulsa «Guardar ubicación».\n\nPanel solar\nSelecciona un panel\nPAN-001 — Comunidad El Pinar\nPAN-002 — Comunidad Las Flores\nQA-PAN-003 — Comunidad QA 20261027\n\nSelecciona un panel para comenzar.\n\nLatitud\n—\nLongitud\n—\nGuardar ubicación\nQuitar ubicación del panel\n\nQuitar una ubicación no elimina el equipo. Puedes volver a marcarlo cuando quieras.\n\nPaneles que ya están registrados\n3 paneles\nPAN-001\nComunidad El Pinar · Sistema Solar El Pinar\nSin ubicación\nUbicar\nPAN-002\nComunidad Las Flores · Sistema Solar Las Flores\nSin ubicación\nUbicar\nQA-PAN-003\nComunidad QA 20261027 · Sistema QA\nSin ubicación\nUbicar\nListado de comunidades\nID\tNOMBRE\tUBICACIÓN\tESTADO\t\n1\tComunidad El Pinar\tChalatenango\tActiva\tEditar\n2\tComunidad Las Flores\tLa Palma\tActiva\tEditar\n3\tComunidad QA 20261027\tChalatenango\tActiva\tEditar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P19.png"
+  },
+  {
+    "id": "P20",
+    "name": "Protección antifalsificación",
+    "input": "POST sin token",
+    "expected": "HTTP 400",
+    "status": "Aprobada",
+    "observed": "HTTP 400",
+    "image": null
+  },
+  {
+    "id": "P21",
+    "name": "Permisos de comunidad",
+    "input": "Usuario Comunidad solicita /Equipos",
+    "expected": "Acceso denegado",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Cuenta/SinPermiso?ReturnUrl=%2FEquipos",
+    "observed": "☀ SolarGrid\nInicio\nIncidencias\nVecino de prueba\nCerrar sesión\nNo tienes permiso\n\nTu usuario no puede acceder a esta función.\n\nVolver al inicio\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P21.png"
+  },
+  {
+    "id": "P22",
+    "name": "Aislamiento por comunidad",
+    "input": "Usuario de El Pinar consulta incidencias",
+    "expected": "No mostrar incidencias de Las Flores ni Sistema QA",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Incidencias",
+    "observed": "☀ SolarGrid\nInicio\nIncidencias\nVecino de prueba\nCerrar sesión\nSEGUIMIENTO\nIncidencias\n\nProblemas reportados y estado de atención.\n\n+ Reportar problema\nFECHA\tSISTEMA\tDESCRIPCIÓN\tPRIORIDAD\tESTADO\t\n26/10/2026\tSistema Solar El Pinar\tRevisar la conexión de un panel.\tMedia\tAbierta\t\n20/10/2026\tSistema Solar El Pinar\tLimpieza preventiva de los paneles.\tBaja\tResuelta\t\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P22.png"
+  },
+  {
+    "id": "P23",
+    "name": "Permisos de técnico",
+    "input": "Técnico solicita crear comunidad",
+    "expected": "Acceso denegado",
+    "status": "Aprobada",
+    "url": "http://127.0.0.1:5187/Cuenta/SinPermiso?ReturnUrl=%2FComunidades%2FCrear",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nTécnico de prueba\nCerrar sesión\nNo tienes permiso\n\nTu usuario no puede acceder a esta función.\n\nVolver al inicio\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P23.png"
+  },
+  {
+    "id": "P24",
+    "name": "Campos opcionales del equipo",
+    "input": "Código QA-SIN-MARCA; marca y modelo vacíos",
+    "expected": "Guardar equipo porque marca y modelo son opcionales",
+    "status": "Fallida",
+    "url": "http://127.0.0.1:5187/Equipos/Crear",
+    "observed": "☀ SolarGrid\nInicio\nComunidades\nSistemas solares\nEquipos\nLecturas\nReportes\nIncidencias\nAdministrador de prueba\nCerrar sesión\nRegistrar equipo\n\nAsigna el equipo a un sistema solar y ponle un código único.\n\nSistema solar\nSelecciona un sistema\nSistema QA\nSistema Solar El Pinar\nSistema Solar Las Flores\nCódigo único del equipo\nTipo\nPanel\nBatería\nInversor\nControlador\nOtro\nMarca\nThe Marca field is required.\nModelo\nThe Modelo field is required.\nEstado\nOperativo\nEn mantenimiento\nFuera de servicio\nGuardar equipo\nCancelar\nSolarGrid · Avance técnico · Datos de demostración",
+    "image": "P24.png"
+  },
+  {
+    "id": "P25",
+    "name": "Código obligatorio vacío",
+    "input": "POST de equipo con Codigo vacío; sistema 1 válido",
+    "expected": "HTTP 200 y mensaje Escribe un código, sin excepción",
+    "status": "Fallida",
+    "observed": "HTTP 500; NullReferenceException en EquiposController.Crear al evaluar Codigo.Trim()",
+    "image": null
+  }
+]

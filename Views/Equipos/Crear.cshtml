@@ -1,0 +1,9 @@
+@model EquipoVm
+@{ ViewData["Title"] = "Registrar equipo"; }
+<section class="tarjeta formulario"><h1>Registrar equipo</h1><p class="secundario">Asigna el equipo a un sistema solar y ponle un código único.</p><form asp-action="Crear" method="post"><div asp-validation-summary="ModelOnly" class="errores"></div>
+<label asp-for="IdSistema">Sistema solar</label><select asp-for="IdSistema" asp-items="ViewBag.Sistemas"><option value="0">Selecciona un sistema</option></select><span asp-validation-for="IdSistema" class="errores"></span>
+<label asp-for="Codigo">Código único del equipo</label><input asp-for="Codigo" placeholder="Ej. PAN-005" /><span asp-validation-for="Codigo" class="errores"></span>
+<label asp-for="Tipo">Tipo</label><select asp-for="Tipo"><option value="Panel">Panel</option><option value="Bateria">Batería</option><option value="Inversor">Inversor</option><option value="Controlador">Controlador</option><option value="Otro">Otro</option></select><span asp-validation-for="Tipo" class="errores"></span>
+<label asp-for="Marca">Marca</label><input asp-for="Marca" /><span asp-validation-for="Marca" class="errores"></span>
+<label asp-for="Modelo">Modelo</label><input asp-for="Modelo" /><span asp-validation-for="Modelo" class="errores"></span>
+<label asp-for="Estado">Estado</label><select asp-for="Estado"><option value="Operativo">Operativo</option><option value="En mantenimiento">En mantenimiento</option><option value="Fuera de servicio">Fuera de servicio</option></select><span asp-validation-for="Estado" class="errores"></span><div class="acciones"><button class="boton boton-primario" type="submit">Guardar equipo</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div></form></section>

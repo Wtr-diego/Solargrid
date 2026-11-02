@@ -1,0 +1,11 @@
+@model List<LecturaEnergia>
+@{ ViewData["Title"] = "Lecturas de energía"; }
+<div class="encabezado"><div><h1>Lecturas de energía</h1><p class="secundario">Últimos 100 registros de generación y consumo.</p></div><a class="boton boton-primario" asp-action="Crear">+ Registrar lectura</a></div>
+<section class="tarjeta tabla-scroll"><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generación (kWh)</th><th>Consumo (kWh)</th><th>Registrado por</th></tr></thead><tbody>
+@foreach (var l in Model)
+{
+    <tr><td>@l.FechaHora.ToString("dd/MM/yyyy HH:mm")</td><td>@l.Sistema.Nombre</td><td>@l.GeneracionKwh</td><td>@l.ConsumoKwh</td><td>@l.Usuario.Nombre</td></tr>
+}
+</tbody></table>
+@if (Model.Count == 0) { <p class="secundario">Todavía no hay lecturas. Registra la primera.</p> }
+</section>

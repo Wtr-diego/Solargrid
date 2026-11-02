@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · SolarGrid</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="barra">
+        <a class="marca" asp-controller="Home" asp-action="Index"><span class="sol">☀</span> SolarGrid</a>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <nav aria-label="Principal">
+                <a asp-controller="Home" asp-action="Index">Inicio</a>
+                @if (User.IsInRole("Administrador") || User.IsInRole("Tecnico"))
+                {
+                    <a asp-controller="Comunidades" asp-action="Index">Comunidades</a>
+                    <a asp-controller="Sistemas" asp-action="Index">Sistemas solares</a>
+                    <a asp-controller="Equipos" asp-action="Index">Equipos</a>
+                    <a asp-controller="Lecturas" asp-action="Index">Lecturas</a>
+                    <a asp-controller="Reportes" asp-action="Index">Reportes</a>
+                }
+                <a asp-controller="Incidencias" asp-action="Index">Incidencias</a>
+            </nav>
+            <div class="sesion">
+                <span>@User.Identity.Name</span>
+                <form asp-controller="Cuenta" asp-action="Salir" method="post">
+                    <button class="boton boton-oscuro" type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+        }
+    </header>
+    <main class="contenedor">
+        @if (TempData["Exito"] is string exito)
+        {
+            <div class="mensaje exito" role="status">@exito</div>
+        }
+        @if (TempData["Error"] is string error)
+        {
+            <div class="mensaje error-mapa" role="alert">@error</div>
+        }
+        @RenderBody()
+    </main>
+    <footer class="pie">SolarGrid · Avance técnico · Datos de demostración</footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,9 @@
+SolarGrid - ejecución 27/10/2026
+28 casos: 26 aprobados y 2 fallidos. Compilación correcta por separado.
+Base aislada: SolarGrid_Pruebas_20261027.
+P01-P25: resultados.json. Capturas originales: Pxx.png.
+P24: campos Marca/Modelo exigidos con mensajes en inglés.
+P25: POST Codigo vacío produce HTTP 500; cuerpo en P25_respuesta.html.
+BD01-BD03: restricciones.txt; intentos revertidos.
+No se corrigió código funcional en esta evaluación.
+Los scripts registran el procedimiento; requieren ajustar la ruta de Playwright fuera de este equipo.

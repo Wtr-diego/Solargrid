@@ -1,0 +1,10 @@
+@model IncidenciaVm
+@{ ViewData["Title"] = "Reportar problema"; }
+<section class="tarjeta formulario"><h1>Reportar problema</h1><p class="secundario">Al guardarlo, su estado inicial será Abierta.</p><form asp-action="Crear" method="post">
+<div asp-validation-summary="ModelOnly" class="errores"></div>
+<label asp-for="IdSistema">Sistema solar</label><select asp-for="IdSistema" asp-items="ViewBag.Sistemas"><option value="0">Selecciona un sistema</option></select><span asp-validation-for="IdSistema" class="errores"></span>
+<label asp-for="IdEquipo">Equipo relacionado (opcional)</label><select asp-for="IdEquipo" asp-items="ViewBag.Equipos"><option value="">Sin equipo específico</option></select><span asp-validation-for="IdEquipo" class="errores"></span>
+<p class="nota">Si eliges un equipo, debe pertenecer al sistema seleccionado.</p>
+<label asp-for="Descripcion">Descripción del problema</label><textarea asp-for="Descripcion" rows="4" placeholder="Ej. Una batería dejó de cargar"></textarea><span asp-validation-for="Descripcion" class="errores"></span>
+<label asp-for="Prioridad">Prioridad</label><select asp-for="Prioridad"><option value="Baja">Baja</option><option value="Media">Media</option><option value="Alta">Alta</option></select><span asp-validation-for="Prioridad" class="errores"></span>
+<div class="acciones"><button class="boton boton-primario" type="submit">Enviar reporte</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div></form></section>

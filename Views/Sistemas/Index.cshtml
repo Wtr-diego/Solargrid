@@ -1,0 +1,14 @@
+@model List<SistemaSolar>
+@{ ViewData["Title"] = "Sistemas solares"; }
+<div class="encabezado"><div><h1>Sistemas solares</h1><p class="secundario">Equipos principales instalados en las comunidades.</p></div>
+@if (User.IsInRole("Administrador")) { <a class="boton boton-primario" asp-action="Crear">+ Nuevo sistema</a> }
+</div>
+<section class="tarjeta tabla-scroll">
+<table><thead><tr><th>ID</th><th>Nombre</th><th>Comunidad</th><th>Instalación</th><th>Capacidad</th><th>Estado</th></tr></thead><tbody>
+@foreach (var s in Model)
+{
+    <tr><td>@s.IdSistema</td><td>@s.Nombre</td><td>@s.Comunidad.Nombre</td><td>@s.FechaInstalacion.ToString("dd/MM/yyyy")</td><td>@s.CapacidadKw kW</td><td><span class="chip">@s.Estado</span></td></tr>
+}
+</tbody></table>
+@if (Model.Count == 0) { <p class="secundario">Aún no hay sistemas registrados.</p> }
+</section>

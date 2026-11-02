@@ -1,0 +1,3 @@
+BD01 APROBADA error 547: The INSERT statement conflicted with the CHECK constraint "CK_Lecturas_Generacion". The conflict occurred in database "SolarGrid_Pruebas_20261027", table "dbo.LecturasEnergia", column 'GeneracionKwh'.
+BD02 APROBADA error 2601: Cannot insert duplicate key row in object 'dbo.Equipos' with unique index 'IX_Equipos_Codigo'. The duplicate key value is (PAN-001).
+BD03 APROBADA error 547: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Equipos_SistemasSolares_IdSistema". The conflict occurred in database "SolarGrid_Pruebas_20261027", table "dbo.SistemasSolares", column 'IdSistema'.

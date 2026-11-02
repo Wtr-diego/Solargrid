@@ -1,0 +1,406 @@
+Tabla                                                                                                                           
+--------------------------------------------------------------------------------------------------------------------------------
+Comunidades                                                                                                                     
+Equipos                                                                                                                         
+Historial                                                                                                                       
+Incidencias                                                                                                                     
+LecturasEnergia                                                                                                                 
+Reportes                                                                                                                        
+SistemasSolares                                                                                                                 
+UbicacionesPanel                                                                                                                
+Usuarios                                                                                                                        
+Restriccion                                                                                                                      definition                                         
+                   
+-------------------------------------------------------------------------------------------------------------------------------- ---------------------------------------------------
+-------------------
+CK_Comunidades_Estado                                                                                                            ([Estado]='Inactiva' OR [Estado]='Activa')         
+                   
+CK_Sistemas_Capacidad                                                                                                            ([CapacidadKw]>(0))                                
+                   
+CK_Usuarios_Rol                                                                                                                  ([Rol]='Comunidad' OR [Rol]='Tecnico' OR [Rol]='Adm
+inistrador')       
+CK_Lecturas_Consumo                                                                                                              ([ConsumoKwh]>=(0))                                
+                   
+CK_Lecturas_Generacion                                                                                                           ([GeneracionKwh]>=(0))                             
+                   
+CK_Reportes_Periodo                                                                                                              ([PeriodoInicio]<=[PeriodoFin])                    
+                   
+CK_Incidencias_Estado                                                                                                            ([Estado]='Cerrada' OR [Estado]='Resuelta' OR [Esta
+do]='En proceso' OR
+CK_Ubicacion_Latitud                                                                                                             ([Latitud]>=(-90) AND [Latitud]<=(90))             
+                   
+CK_Ubicacion_Longitud                                                                                                            ([Longitud]>=(-180) AND [Longitud]<=(180))         
+                   
+Origen                                                                                                                           Destino                                            
+                                                                              Borrado                                                     
+-------------------------------------------------------------------------------------------------------------------------------- ---------------------------------------------------
+----------------------------------------------------------------------------- ------------------------------------------------------------
+SistemasSolares                                                                                                                  Comunidades                                        
+                                                                              NO_ACTION                                                   
+Usuarios                                                                                                                         Comunidades                                        
+                                                                              NO_ACTION                                                   
+Equipos                                                                                                                          SistemasSolares                                    
+                                                                              NO_ACTION                                                   
+Historial                                                                                                                        Usuarios                                           
+                                                                              NO_ACTION                                                   
+LecturasEnergia                                                                                                                  SistemasSolares                                    
+                                                                              NO_ACTION                                                   
+LecturasEnergia                                                                                                                  Usuarios                                           
+                                                                              NO_ACTION                                                   
+Reportes                                                                                                                         SistemasSolares                                    
+                                                                              NO_ACTION                                                   
+Reportes                                                                                                                         Usuarios                                           
+                                                                              NO_ACTION                                                   
+Incidencias                                                                                                                      Equipos                                            
+                                                                              NO_ACTION                                                   
+Incidencias                                                                                                                      SistemasSolares                                    
+                                                                              NO_ACTION                                                   
+Incidencias                                                                                                                      Usuarios                                           
+                                                                              NO_ACTION                                                   
+UbicacionesPanel                                                                                                                 Equipos                                            
+                                                                              CASCADE                                                     
+IndiceUnico                                                                                                                      Tabla                                              
+                                                                             
+-------------------------------------------------------------------------------------------------------------------------------- ---------------------------------------------------
+-----------------------------------------------------------------------------
+clst                                                                                                                             sysrscols                                          
+                                                                             
+clust                                                                                                                            sysrowsets                                         
+                                                                             
+clst                                                                                                                             sysclones                                          
+                                                                             
+clust                                                                                                                            sysallocunits                                      
+                                                                             
+nc                                                                                                                               sysallocunits                                      
+                                                                             
+clst                                                                                                                             sysseobjvalues                                     
+                                                                             
+cl                                                                                                                               syspriorities                                      
+                                                                             
+nc                                                                                                                               syspriorities                                      
+                                                                             
+nc2                                                                                                                              syspriorities                                      
+                                                                             
+cl                                                                                                                               sysdbfrag                                          
+                                                                             
+nc1                                                                                                                              sysdbfrag                                          
+                                                                             
+cl                                                                                                                               sysfgfrag                                          
+                                                                             
+clst                                                                                                                             sysdbfiles                                         
+                                                                             
+cl                                                                                                                               syspru                                             
+                                                                             
+clst                                                                                                                             sysbrickfiles                                      
+                                                                             
+cl                                                                                                                               sysphfg                                            
+                                                                             
+clst                                                                                                                             sysprufiles                                        
+                                                                             
+clst                                                                                                                             sysftinds                                          
+                                                                             
+clst                                                                                                                             sysowners                                          
+                                                                             
+nc1                                                                                                                              sysowners                                          
+                                                                             
+nc2                                                                                                                              sysowners                                          
+                                                                             
+clst                                                                                                                             sysdbreg                                           
+                                                                             
+nc1                                                                                                                              sysdbreg                                           
+                                                                             
+nc2                                                                                                                              sysdbreg                                           
+                                                                             
+clust                                                                                                                            sysprivs                                           
+                                                                             
+clst                                                                                                                             sysschobjs                                         
+                                                                             
+nc1                                                                                                                              sysschobjs                                         
+                                                                             
+nc2                                                                                                                              sysschobjs                                         
+                                                                             
+clust                                                                                                                            syscsrowgroups                                     
+                                                                             
+clidx1                                                                                                                           sysextsources                                      
+                                                                             
+ncidx1                                                                                                                           sysextsources                                      
+                                                                             
+clidx1                                                                                                                           sysexttables                                       
+                                                                             
+clidx1                                                                                                                           sysextfileformats                                  
+                                                                             
+ncidx1                                                                                                                           sysextfileformats                                  
+                                                                             
+clust                                                                                                                            sysmultiobjvalues                                  
+                                                                             
+nc1                                                                                                                              sysmultiobjvalues                                  
+                                                                             
+clst                                                                                                                             syscolpars                                         
+                                                                             
+nc                                                                                                                               syscolpars                                         
+                                                                             
+cl                                                                                                                               sysxlgns                                           
+                                                                             
+nc1                                                                                                                              sysxlgns                                           
+                                                                             
+nc2                                                                                                                              sysxlgns                                           
+                                                                             
+cl                                                                                                                               sysxsrvs                                           
+                                                                             
+nc1                                                                                                                              sysxsrvs                                           
+                                                                             
+clst                                                                                                                             sysnsobjs                                          
+                                                                             
+nc                                                                                                                               sysnsobjs                                          
+                                                                             
+clst                                                                                                                             sysusermsgs                                        
+                                                                             
+cl                                                                                                                               syscerts                                           
+                                                                             
+nc1                                                                                                                              syscerts                                           
+                                                                             
+nc2                                                                                                                              syscerts                                           
+                                                                             
+nc3                                                                                                                              syscerts                                           
+                                                                             
+cl                                                                                                                               sysrmtlgns                                         
+                                                                             
+cl                                                                                                                               syslnklgns                                         
+                                                                             
+clust                                                                                                                            sysxprops                                          
+                                                                             
+clst                                                                                                                             sysscalartypes                                     
+                                                                             
+nc1                                                                                                                              sysscalartypes                                     
+                                                                             
+nc2                                                                                                                              sysscalartypes                                     
+                                                                             
+clst                                                                                                                             systypedsubobjs                                    
+                                                                             
+nc                                                                                                                               systypedsubobjs                                    
+                                                                             
+clst                                                                                                                             sysidxstats                                        
+                                                                             
+nc                                                                                                                               sysidxstats                                        
+                                                                             
+clst                                                                                                                             sysiscols                                          
+                                                                             
+nc1                                                                                                                              sysiscols                                          
+                                                                             
+clst                                                                                                                             sysendpts                                          
+                                                                             
+nc1                                                                                                                              sysendpts                                          
+                                                                             
+clst                                                                                                                             syswebmethods                                      
+                                                                             
+clst                                                                                                                             sysbinobjs                                         
+                                                                             
+nc1                                                                                                                              sysbinobjs                                         
+                                                                             
+clust                                                                                                                            sysaudacts                                         
+                                                                             
+clst                                                                                                                             sysobjvalues                                       
+                                                                             
+clust                                                                                                                            syscscolsegments                                   
+                                                                             
+clust                                                                                                                            syscsdictionaries                                  
+                                                                             
+clst                                                                                                                             sysclsobjs                                         
+                                                                             
+nc                                                                                                                               sysclsobjs                                         
+                                                                             
+clust                                                                                                                            sysrowsetrefs                                      
+                                                                             
+clst                                                                                                                             sysremsvcbinds                                     
+                                                                             
+nc1                                                                                                                              sysremsvcbinds                                     
+                                                                             
+nc2                                                                                                                              sysremsvcbinds                                     
+                                                                             
+clst                                                                                                                             sysxmitqueue                                       
+                                                                             
+clst                                                                                                                             sysrts                                             
+                                                                             
+nc1                                                                                                                              sysrts                                             
+                                                                             
+nc2                                                                                                                              sysrts                                             
+                                                                             
+clst                                                                                                                             sysconvgroup                                       
+                                                                             
+cl                                                                                                                               sysdesend                                          
+                                                                             
+cl                                                                                                                               sysdercv                                           
+                                                                             
+clst                                                                                                                             syssingleobjrefs                                   
+                                                                             
+nc1                                                                                                                              syssingleobjrefs                                   
+                                                                             
+clst                                                                                                                             sysmultiobjrefs                                    
+                                                                             
+nc1                                                                                                                              sysmultiobjrefs                                    
+                                                                             
+cl                                                                                                                               sysguidrefs                                        
+                                                                             
+nc                                                                                                                               sysguidrefs                                        
+                                                                             
+clst                                                                                                                             sysfoqueues                                        
+                                                                             
+cl                                                                                                                               syschildinsts                                      
+                                                                             
+clst                                                                                                                             syscompfragments                                   
+                                                                             
+cl                                                                                                                               sysftsemanticsdb                                   
+                                                                             
+clst                                                                                                                             sysftstops                                         
+                                                                             
+clst                                                                                                                             sysftproperties                                    
+                                                                             
+nonclst                                                                                                                          sysftproperties                                    
+                                                                             
+nonclstgi                                                                                                                        sysftproperties                                    
+                                                                             
+clst                                                                                                                             sysxmitbody                                        
+                                                                             
+clst                                                                                                                             sysfos                                             
+                                                                             
+nc1                                                                                                                              sysfos                                             
+                                                                             
+clst                                                                                                                             sysqnames                                          
+                                                                             
+nc1                                                                                                                              sysqnames                                          
+                                                                             
+cl                                                                                                                               sysxmlcomponent                                    
+                                                                             
+nc1                                                                                                                              sysxmlcomponent                                    
+                                                                             
+cl                                                                                                                               sysxmlfacet                                        
+                                                                             
+cl                                                                                                                               sysxmlplacement                                    
+                                                                             
+nc1                                                                                                                              sysxmlplacement                                    
+                                                                             
+cl                                                                                                                               sysobjkeycrypts                                    
+                                                                             
+cl                                                                                                                               sysasymkeys                                        
+                                                                             
+nc1                                                                                                                              sysasymkeys                                        
+                                                                             
+nc3                                                                                                                              sysasymkeys                                        
+                                                                             
+clst                                                                                                                             syssqlguides                                       
+                                                                             
+nc1                                                                                                                              syssqlguides                                       
+                                                                             
+nc2                                                                                                                              syssqlguides                                       
+                                                                             
+clst                                                                                                                             sysbinsubobjs                                      
+                                                                             
+nc1                                                                                                                              sysbinsubobjs                                      
+                                                                             
+clst                                                                                                                             syssoftobjrefs                                     
+                                                                             
+nc1                                                                                                                              syssoftobjrefs                                     
+                                                                             
+sqlagent_jobs_clust                                                                                                              sqlagent_jobs                                      
+                                                                             
+sqlagent_jobsteps_clust                                                                                                          sqlagent_jobsteps                                  
+                                                                             
+sqlagent_jobsteps_nc1                                                                                                            sqlagent_jobsteps                                  
+                                                                             
+sqlagent_jobsteps_nc2                                                                                                            sqlagent_jobsteps                                  
+                                                                             
+sqlagent_job_history_clust                                                                                                       sqlagent_job_history                               
+                                                                             
+plan_persist_query_text_cidx                                                                                                     plan_persist_query_text                            
+                                                                             
+plan_persist_query_text_idx1                                                                                                     plan_persist_query_text                            
+                                                                             
+plan_persist_query_cidx                                                                                                          plan_persist_query                                 
+                                                                             
+plan_persist_plan_cidx                                                                                                           plan_persist_plan                                  
+                                                                             
+plan_persist_runtime_stats_cidx                                                                                                  plan_persist_runtime_stats                         
+                                                                             
+plan_persist_runtime_stats_idx1                                                                                                  plan_persist_runtime_stats                         
+                                                                             
+plan_persist_runtime_stats_interval_cidx                                                                                         plan_persist_runtime_stats_interval                
+                                                                             
+plan_persist_context_settings_cidx                                                                                               plan_persist_context_settings                      
+                                                                             
+plan_persist_query_hints_cidx                                                                                                    plan_persist_query_hints                           
+                                                                             
+plan_persist_query_template_parameterization_cidx                                                                                plan_persist_query_template_parameterization       
+                                                                             
+plan_persist_query_template_parameterization_idx1                                                                                plan_persist_query_template_parameterization       
+                                                                             
+plan_persist_wait_stats_cidx                                                                                                     plan_persist_wait_stats                            
+                                                                             
+plan_persist_wait_stats_idx1                                                                                                     plan_persist_wait_stats                            
+                                                                             
+ci_block_id                                                                                                                      db_ledger_blocks                                   
+                                                                             
+ci_block_id                                                                                                                      db_ledger_transactions                             
+                                                                             
+nci_transaction_id                                                                                                               db_ledger_transactions                             
+                                                                             
+IX_backup_metadata_uuid                                                                                                          backup_metadata_store                              
+                                                                             
+plan_feedback_cidx                                                                                                               plan_persist_plan_feedback                         
+                                                                             
+plan_persist_query_variant_cidx                                                                                                  plan_persist_query_variant                         
+                                                                             
+ci_ledger_tables_history_internal                                                                                                ledger_tables_history_internal                     
+                                                                             
+ci_ledger_columns_history_internal                                                                                               ledger_columns_history_internal                    
+                                                                             
+ci_type_and_path                                                                                                                 db_ledger_digest_locations                         
+                                                                             
+plan_persist_qds_replicas_cidx                                                                                                   plan_persist_replicas                              
+                                                                             
+plan_persist_plan_force_cidx                                                                                                     plan_persist_plan_forcing_locations                
+                                                                             
+plan_persist_plan_force_idx1                                                                                                     plan_persist_plan_forcing_locations                
+                                                                             
+plan_persist_runtime_stats_v2_cidx                                                                                               plan_persist_runtime_stats_v2                      
+                                                                             
+plan_persist_runtime_stats_v2_idx2                                                                                               plan_persist_runtime_stats_v2                      
+                                                                             
+plan_persist_wait_stats_v2_cidx                                                                                                  plan_persist_wait_stats_v2                         
+                                                                             
+plan_persist_wait_stats_v2_idx2                                                                                                  plan_persist_wait_stats_v2                         
+                                                                             
+wpr_bucket_clustered_idx                                                                                                         wpr_bucket_table                                   
+                                                                             
+IX_Comunidades_Nombre                                                                                                            Comunidades                                        
+                                                                             
+IX_Usuarios_Correo                                                                                                               Usuarios                                           
+                                                                             
+IX_Equipos_Codigo                                                                                                                Equipos                                            
+                                                                             
+queue_clustered_index                                                                                                            queue_messages_1977058079                          
+                                                                             
+queue_secondary_index                                                                                                            queue_messages_1977058079                          
+                                                                             
+queue_clustered_index                                                                                                            queue_messages_2009058193                          
+                                                                             
+queue_secondary_index                                                                                                            queue_messages_2009058193                          
+                                                                             
+queue_clustered_index                                                                                                            queue_messages_2041058307                          
+                                                                             
+queue_secondary_index                                                                                                            queue_messages_2041058307                          
+                                                                             
+FSTSClusIdx                                                                                                                      filestream_tombstone_2073058421                    
+                                                                             
+ci_commit_ts                                                                                                                     syscommittab                                       
+                                                                             
+si_xdes_id                                                                                                                       syscommittab                                       
+                                                                             
+FFtUpdateIdx                                                                                                                     filetable_updates_2105058535                       
+                                                                             
+Tabla     Filas      
+--------- -----------
+Historial           0
+Reportes            0
+GeneracionKwh    ConsumoKwh      
+---------------- ----------------
+           30.00            20.00

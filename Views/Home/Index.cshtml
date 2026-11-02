@@ -1,0 +1,22 @@
+@{ ViewData["Title"] = "Panel principal"; }
+<div class="encabezado"><div><span class="etiqueta">SOLARGRID · DEMOSTRACIÓN</span><h1>Panel principal</h1><p class="secundario">Control sencillo de energía solar para comunidades rurales.</p></div><span class="chip">@(User.IsInRole("Administrador") ? "Administrador" : User.IsInRole("Tecnico") ? "Técnico" : "Usuario de comunidad")</span></div>
+@if (User.IsInRole("Administrador") || User.IsInRole("Tecnico"))
+{
+<div class="indicadores indicadores-5">
+<article class="indicador"><span>Comunidades</span><strong>@ViewBag.TotalComunidades</strong><small>Registradas</small></article>
+<article class="indicador"><span>Sistemas solares</span><strong>@ViewBag.TotalSistemas</strong><small>Instalados</small></article>
+<article class="indicador"><span>Equipos</span><strong>@ViewBag.TotalEquipos</strong><small>En inventario</small></article>
+<article class="indicador"><span>Lecturas</span><strong>@ViewBag.TotalLecturas</strong><small>Registros de energía</small></article>
+<article class="indicador"><span>Problemas activos</span><strong>@ViewBag.IncidenciasAbiertas</strong><small>Abiertos o en proceso</small></article>
+</div>
+<section class="tarjeta"><h2>Acciones rápidas</h2><div class="acciones"><a class="boton boton-primario" asp-controller="Comunidades" asp-action="Index">Comunidades</a><a class="boton boton-contorno" asp-controller="Sistemas" asp-action="Index">Sistemas</a><a class="boton boton-contorno" asp-controller="Equipos" asp-action="Crear">Nuevo equipo</a><a class="boton boton-contorno" asp-controller="Lecturas" asp-action="Crear">Nueva lectura</a><a class="boton boton-contorno" asp-controller="Incidencias" asp-action="Crear">Reportar incidencia</a><a class="boton boton-contorno" asp-controller="Reportes" asp-action="Index">Ver reporte</a></div></section>
+<section class="tarjeta tabla-scroll"><h2>Últimas lecturas de energía</h2><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generación</th><th>Consumo</th></tr></thead><tbody>
+@foreach (var lectura in (List<LecturaEnergia>)ViewBag.UltimasLecturas)
+{<tr><td>@lectura.FechaHora.ToString("dd/MM/yyyy")</td><td>@lectura.Sistema.Nombre</td><td>@lectura.GeneracionKwh kWh</td><td>@lectura.ConsumoKwh kWh</td></tr>}
+</tbody></table></section>
+}
+else
+{
+<section class="tarjeta"><h2>Bienvenido a SolarGrid</h2><p class="secundario">Puedes revisar los problemas reportados por tu comunidad y avisar si hay una falla.</p><div class="acciones"><a class="boton boton-primario" asp-controller="Incidencias" asp-action="Index">Ver incidencias</a><a class="boton boton-contorno" asp-controller="Incidencias" asp-action="Crear">Reportar problema</a></div></section>
+}
+<section class="mensaje demo">Los datos iniciales son de ejemplo para presentar el proyecto. Las lecturas se ingresan manualmente; el sitio no se conecta a paneles reales.</section>

@@ -1,0 +1,7 @@
+@model EstadoIncidenciaVm
+@{ ViewData["Title"] = "Actualizar incidencia"; var incidencia = (Incidencia)ViewBag.Incidencia; }
+<section class="tarjeta formulario"><h1>Dar seguimiento al problema</h1><p class="secundario"><strong>@incidencia.Sistema.Nombre:</strong> @incidencia.Descripcion</p>
+<form asp-action="Estado" asp-route-id="@incidencia.IdIncidencia" method="post"><div asp-validation-summary="ModelOnly" class="errores"></div>
+<label asp-for="Estado">Estado actual</label><select asp-for="Estado"><option value="Abierta">Abierta</option><option value="En proceso">En proceso</option><option value="Resuelta">Resuelta</option><option value="Cerrada">Cerrada</option></select><span asp-validation-for="Estado" class="errores"></span>
+<label asp-for="Solucion">Solución / observaciones</label><textarea asp-for="Solucion" rows="4"></textarea><span asp-validation-for="Solucion" class="errores"></span>
+<div class="acciones"><button class="boton boton-primario" type="submit">Guardar seguimiento</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div></form></section>

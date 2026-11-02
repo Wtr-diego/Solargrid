@@ -1,0 +1,12 @@
+@model ComunidadVm
+@{ ViewData["Title"] = "Editar comunidad"; }
+<section class="tarjeta formulario">
+    <h1>Editar comunidad</h1>
+    <form asp-action="Editar" asp-route-id="@ViewBag.IdComunidad" method="post">
+        <div asp-validation-summary="ModelOnly" class="errores"></div>
+        <label asp-for="Nombre">Nombre de la comunidad</label><input asp-for="Nombre" /><span asp-validation-for="Nombre" class="errores"></span>
+        <label asp-for="Ubicacion">Ubicación</label><input asp-for="Ubicacion" /><span asp-validation-for="Ubicacion" class="errores"></span>
+        <label asp-for="Estado">Estado</label><select asp-for="Estado"><option value="Activa">Activa</option><option value="Inactiva">Inactiva</option></select><span asp-validation-for="Estado" class="errores"></span>
+        <div class="acciones"><button class="boton boton-primario" type="submit">Guardar cambios</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div>
+    </form>
+</section>

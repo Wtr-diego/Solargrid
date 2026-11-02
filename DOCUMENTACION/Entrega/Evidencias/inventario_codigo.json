@@ -1,0 +1,158 @@
+[
+  {
+    "archivo": "Controllers/ComunidadesController.cs",
+    "sha256": "279480fea75fe64d6b139bb53dbb7bdc0a1e8009079bef569008a4b2f377a1e2"
+  },
+  {
+    "archivo": "Controllers/CuentaController.cs",
+    "sha256": "031f445654e0121798e35c7090f3d0c03ad2d82388998e341aeca01e0dd943b1"
+  },
+  {
+    "archivo": "Controllers/EquiposController.cs",
+    "sha256": "ca96e8384f59cec3925d9d5b6ddbfdef841612eb1429491d58ce4c5b91ad23a8"
+  },
+  {
+    "archivo": "Controllers/HomeController.cs",
+    "sha256": "d0d35718d2cf1bc38caaad809e4401171cf351035e79a704236ee21af70d2d50"
+  },
+  {
+    "archivo": "Controllers/IncidenciasController.cs",
+    "sha256": "ded95c453fb85bf4b85f86b7706a13faf79911c86bd1063c9b9cd508bc31cc75"
+  },
+  {
+    "archivo": "Controllers/LecturasController.cs",
+    "sha256": "447562fe74a925293262a1010153c09f517a9b07ac383106ad167956b6ac61a5"
+  },
+  {
+    "archivo": "Controllers/ReportesController.cs",
+    "sha256": "9c34ed92d9072da75a887f81fc94dab03af2857217c2146efd65b4a2762a8a28"
+  },
+  {
+    "archivo": "Controllers/SistemasController.cs",
+    "sha256": "073ee23044361c41f1edc576d2c023d6bbc7894647706ef0c82042b84a6bf8e5"
+  },
+  {
+    "archivo": "Models/Entidades.cs",
+    "sha256": "55a0fa19de925845766c067a912b8cea9ab274d23f02ef206dbd1b5ff81523a8"
+  },
+  {
+    "archivo": "ViewModels/Formularios.cs",
+    "sha256": "eee7d484ee66178ac4105d4d11a9c232918b5f5e8aa120f69a05d7fea92e3b69"
+  },
+  {
+    "archivo": "ViewModels/MapaComunidadesVm.cs",
+    "sha256": "9ce0eec72af45874cca84fa7903f4048dcf4dcdff002bbcd9f4d26f9991213c2"
+  },
+  {
+    "archivo": "Data/DatosIniciales.cs",
+    "sha256": "46dbfe06e96d43a0266a664fbffbaebb646e958620a0b0fbb73f9d70f5c0cfc4"
+  },
+  {
+    "archivo": "Data/SolarGridDbContext.cs",
+    "sha256": "ffe1f2957905b88e75daeba4a8329f7b8055b0a6976442de16cb837390275460"
+  },
+  {
+    "archivo": "Views/_ViewImports.cshtml",
+    "sha256": "09a028151740f724e88a69b14f74b56483b73dace75b20a8d34aa47acd750fad"
+  },
+  {
+    "archivo": "Views/_ViewStart.cshtml",
+    "sha256": "62afaee3500962d2262cf59943e45ad8be3d3e0d26698b4152a0c4b7705fc129"
+  },
+  {
+    "archivo": "Views/Comunidades/Crear.cshtml",
+    "sha256": "6a66212e5e1392816677cdf246a2284a895e0bb426a7e0a59a17af88ed64b408"
+  },
+  {
+    "archivo": "Views/Comunidades/Editar.cshtml",
+    "sha256": "2fb2a813ec7c18eb4b374ff0f3d636176ea26b8ca1d1527eb4531e3bec5369db"
+  },
+  {
+    "archivo": "Views/Comunidades/Index.cshtml",
+    "sha256": "5eaef3d793443ad9965c084c0e30e6105a63bb1ef54e217e536c3df15307402f"
+  },
+  {
+    "archivo": "Views/Cuenta/Ingresar.cshtml",
+    "sha256": "ce9eb64a413299142863270773b1503b6a6c0e32e56c3fe116655ecd22ee4f29"
+  },
+  {
+    "archivo": "Views/Cuenta/SinPermiso.cshtml",
+    "sha256": "a2f9ecc209ad62447637857a87b423e2c5c8dcdf9c77792e5d01c601077491b8"
+  },
+  {
+    "archivo": "Views/Equipos/Crear.cshtml",
+    "sha256": "93985d61183bbcbeb0666477d68493aeaf8baa6f339c098ce10503bffae363c8"
+  },
+  {
+    "archivo": "Views/Equipos/Editar.cshtml",
+    "sha256": "a860d5f7ae2fa06da6e4801f549d6af4e59403b9b161e59777c6c2d6bdd454af"
+  },
+  {
+    "archivo": "Views/Equipos/Index.cshtml",
+    "sha256": "b667114471e501571201ccdb1997022e4788f8ac5117e3301703c6701279d80b"
+  },
+  {
+    "archivo": "Views/Home/Error.cshtml",
+    "sha256": "11ba7a7d1b1cb02a0e24cc0f58b30526f62d1aefa48cc348f61532b1d0862c44"
+  },
+  {
+    "archivo": "Views/Home/Index.cshtml",
+    "sha256": "43cf512d36faa82410cbea58af4c5d22fc5c0c42e5073b25f90b092a362280ab"
+  },
+  {
+    "archivo": "Views/Incidencias/Crear.cshtml",
+    "sha256": "391476023d86d94d5407b0a6e151b2b91f7398afb53a6bdd95474f538ea6fc7d"
+  },
+  {
+    "archivo": "Views/Incidencias/Estado.cshtml",
+    "sha256": "5f5e3ba8b01726f9ac3129427d37739eee6ce5049750124f3184847d241459a1"
+  },
+  {
+    "archivo": "Views/Incidencias/Index.cshtml",
+    "sha256": "6ccf38c2ababb015eb3da894dd5f02012685e8d4c71f49893c1865a02e3a7b01"
+  },
+  {
+    "archivo": "Views/Lecturas/Crear.cshtml",
+    "sha256": "bced5131be0a6d93a66c2a29d38afe394f4ff80ccce713e9a82b65c22378f186"
+  },
+  {
+    "archivo": "Views/Lecturas/Index.cshtml",
+    "sha256": "c3ab2b944fb9cc985fee6ff859556c52cdaeb808c201088219259069941a0126"
+  },
+  {
+    "archivo": "Views/Reportes/Index.cshtml",
+    "sha256": "5e655ed1fa853dbd0ea820965c02c4df76fd12af657ff674eb7f47908a371b1c"
+  },
+  {
+    "archivo": "Views/Shared/_Layout.cshtml",
+    "sha256": "94a37e655cddc9e0848f69916880b3e5f010cb0f88a133e041b2930b294b678d"
+  },
+  {
+    "archivo": "Views/Sistemas/Crear.cshtml",
+    "sha256": "0325f9db7e6db7763093b803a8474310b8787181d6c028d925a3f7bbb197d9e4"
+  },
+  {
+    "archivo": "Views/Sistemas/Index.cshtml",
+    "sha256": "616925594927e4e214a03249112297234e6ad5b02280ae72650b99dcb2b74caa"
+  },
+  {
+    "archivo": "SQL/01_Crear_Base_SolarGrid.sql",
+    "sha256": "7a828d68c4783662d488736af5f06a33bfc012fa170d78f9a0969678e884bcc0"
+  },
+  {
+    "archivo": "SQL/02_Verificar_Base.sql",
+    "sha256": "e92eeba75576a21ecb0947a1b0ae91086fd14dec5001986bc7303a9e5a806656"
+  },
+  {
+    "archivo": "wwwroot/js/mapa-comunidades.js",
+    "sha256": "69710e54ab8c407dfdc27a2f4137bb05ed66795ee28d2912063e0fefcbfd647e"
+  },
+  {
+    "archivo": "Program.cs",
+    "sha256": "2d6214980301011719a451053dbf5c1cf0b35c8ed5e2b930a713a27bb222055f"
+  },
+  {
+    "archivo": "SolarGrid.csproj",
+    "sha256": "60cceeb6ea710476d2582ba94a42a08946dcdc6fbcdf566baba2f8713d95c39e"
+  }
+]

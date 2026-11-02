@@ -1,0 +1,18 @@
+@model List<LecturaEnergia>
+@{ ViewData["Title"] = "Reportes de energía"; }
+<div class="encabezado"><div><span class="etiqueta">RESUMEN</span><h1>Reporte de energía</h1><p class="secundario">Generación y consumo del período seleccionado.</p></div><button class="boton boton-contorno" type="button" onclick="window.print()">Imprimir</button></div>
+<section class="tarjeta"><form method="get" asp-action="Index" class="filtros">
+<div><label for="desde">Desde</label><input type="date" id="desde" name="desde" value="@ViewBag.Desde" required /></div>
+<div><label for="hasta">Hasta</label><input type="date" id="hasta" name="hasta" value="@ViewBag.Hasta" required /></div>
+<div><label for="idSistema">Sistema</label><select id="idSistema" name="idSistema" asp-items="ViewBag.Sistemas"><option value="">Todos</option></select></div>
+<div><button class="boton boton-primario" type="submit">Consultar</button></div>
+</form>
+@if(ViewBag.Error is string error){<p class="errores">@error</p>}
+</section>
+@if(ViewBag.Error == null)
+{
+<div class="indicadores"><article class="indicador"><span>Generación total</span><strong>@ViewBag.Generacion kWh</strong><small>Energía registrada</small></article><article class="indicador"><span>Consumo total</span><strong>@ViewBag.Consumo kWh</strong><small>Energía utilizada</small></article><article class="indicador"><span>Lecturas</span><strong>@ViewBag.Total</strong><small>Total del período; se muestran hasta 500 filas</small></article></div>
+<section class="tarjeta tabla-scroll"><h2>Detalle del período</h2><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generada</th><th>Consumida</th></tr></thead><tbody>
+@foreach(var l in Model){<tr><td>@l.FechaHora.ToString("dd/MM/yyyy HH:mm")</td><td>@l.Sistema.Nombre</td><td>@l.GeneracionKwh kWh</td><td>@l.ConsumoKwh kWh</td></tr>}
+</tbody></table>@if(Model.Count==0){<p class="secundario">No existen lecturas en este período.</p>}</section>
+}

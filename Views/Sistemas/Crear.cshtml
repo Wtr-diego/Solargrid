@@ -1,0 +1,14 @@
+@model SistemaVm
+@{ ViewData["Title"] = "Nuevo sistema"; }
+<section class="tarjeta formulario">
+    <h1>Registrar sistema solar</h1>
+    <form asp-action="Crear" method="post">
+        <div asp-validation-summary="ModelOnly" class="errores"></div>
+        <label asp-for="IdComunidad">Comunidad</label><select asp-for="IdComunidad" asp-items="ViewBag.Comunidades"><option value="0">Selecciona una comunidad</option></select><span asp-validation-for="IdComunidad" class="errores"></span>
+        <label asp-for="Nombre">Nombre del sistema</label><input asp-for="Nombre" /><span asp-validation-for="Nombre" class="errores"></span>
+        <label asp-for="FechaInstalacion">Fecha de instalación</label><input asp-for="FechaInstalacion" type="date" value="@Model.FechaInstalacion.ToString("yyyy-MM-dd")" /><span asp-validation-for="FechaInstalacion" class="errores"></span>
+        <label asp-for="CapacidadKw">Capacidad en kW</label><input asp-for="CapacidadKw" type="number" step="0.01" /><span asp-validation-for="CapacidadKw" class="errores"></span>
+        <label asp-for="Estado">Estado</label><select asp-for="Estado"><option value="Operativo">Operativo</option><option value="En mantenimiento">En mantenimiento</option><option value="Fuera de servicio">Fuera de servicio</option></select><span asp-validation-for="Estado" class="errores"></span>
+        <div class="acciones"><button class="boton boton-primario" type="submit">Guardar sistema</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div>
+    </form>
+</section>
