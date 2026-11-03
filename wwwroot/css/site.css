@@ -38,3 +38,51 @@ textarea{font-family:inherit;border:1px solid #ccd9dd;background:#fff;color:#263
 .pin-solar span{display:block;text-align:center}
 @media(max-width:950px){.grilla-mapa{grid-template-columns:1fr}.indicadores-mapa{grid-template-columns:repeat(2,minmax(0,1fr))}.configuracion-mapa{max-width:none}}
 @media(max-width:700px){.cabecera-mapa{flex-direction:column;gap:8px}.filtro-comunidad{width:100%}.lista-paneles{grid-template-columns:1fr}.mapa-paneles{height:350px}}
+
+/* Tema global: la preferencia se aplica antes de mostrar la pagina. */
+:root{color-scheme:light}
+.selector-tema{width:66px;height:36px;flex-shrink:0;padding:3px;border:1px solid #d7b565;border-radius:999px;background:#fff0cc;cursor:pointer;box-shadow:inset 0 1px 3px #513a1514;transition:background .2s,border-color .2s}
+.selector-tema-perilla{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;color:#a96400;box-shadow:0 2px 5px #513a1526;transition:transform .2s,background .2s,color .2s}
+.selector-tema svg{width:19px;height:19px}
+.selector-tema .tema-luna{display:none}
+[data-tema="dark"] .selector-tema{background:#263953;border-color:#607b9c}
+[data-tema="dark"] .selector-tema-perilla{transform:translateX(30px);background:#dce9fa;color:#304b78}
+[data-tema="dark"] .selector-tema .tema-sol{display:none}
+[data-tema="dark"] .selector-tema .tema-luna{display:block}
+.selector-tema:hover{filter:brightness(.97)}
+.selector-tema:focus-visible{outline:3px solid #26877a;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.selector-tema,.selector-tema-perilla{transition:none}}
+@media print{.selector-tema{display:none}}
+@media screen{
+    :root[data-tema="dark"]{color-scheme:dark;color:#e4edf2;background:#101a23}
+    [data-tema="dark"] a{color:#74d7c5}
+    [data-tema="dark"] .barra{background:#16242f;border-color:#344957}
+    [data-tema="dark"] .marca,[data-tema="dark"] .indicador strong{color:#e4f6f2}
+    [data-tema="dark"] .barra nav a,[data-tema="dark"] .sesion,[data-tema="dark"] .secundario,
+    [data-tema="dark"] .indicador span,[data-tema="dark"] th{color:#b2c4cf}
+    [data-tema="dark"] .pie,[data-tema="dark"] .nota,[data-tema="dark"] .indicador small,
+    [data-tema="dark"] .coordenadas-preview span,[data-tema="dark"] .info-panel-mapa span{color:#a3b9c5}
+    [data-tema="dark"] .pie,[data-tema="dark"] td,[data-tema="dark"] th,
+    [data-tema="dark"] .paneles-registrados,[data-tema="dark"] .fila-panel-mapa{border-color:#344957}
+    [data-tema="dark"] .tarjeta,[data-tema="dark"] .indicador{background:#192a36;border-color:#344957;box-shadow:0 7px 24px #0002}
+    [data-tema="dark"] th,[data-tema="dark"] .configuracion-mapa{background:#14232e;border-color:#344957}
+    [data-tema="dark"] td,[data-tema="dark"] label,[data-tema="dark"] .info-panel-mapa strong{color:#d8e5ed}
+    [data-tema="dark"] input,[data-tema="dark"] select,[data-tema="dark"] textarea,
+    [data-tema="dark"] .coordenadas-preview div{background:#101e29;color:#e4edf2;border-color:#506674}
+    [data-tema="dark"] input::placeholder,[data-tema="dark"] textarea::placeholder{color:#9cafbc}
+    [data-tema="dark"] .etiqueta{color:#74d7c5}
+    [data-tema="dark"] .boton-primario{background:#126e64;color:#fff}
+    [data-tema="dark"] .boton-contorno{background:#192a36;color:#8be4d3;border-color:#54867e}
+    [data-tema="dark"] .boton-oscuro{background:#304c5b;color:#fff}
+    [data-tema="dark"] .chip,[data-tema="dark"] .chip-ubicado,[data-tema="dark"] .exito,
+    [data-tema="dark"] .mensaje-seleccion{background:#163e35;color:#a2edcb;border-color:#427c63}
+    [data-tema="dark"] .demo,[data-tema="dark"] .chip-pendiente{background:#40341e;color:#f5d393;border-color:#80683a}
+    [data-tema="dark"] .errores{color:#ffadb3}
+    [data-tema="dark"] .error-mapa{background:#42272e;color:#ffbac0;border-color:#88505a}
+    [data-tema="dark"] .ilustracion{background:#254435;color:#ffdc80}
+    [data-tema="dark"] .mapa-paneles{background:#243b39;border-color:#506674}
+    [data-tema="dark"] .configuracion-mapa button:disabled{background:#2b3e49;color:#9aafbb;border-color:#405662}
+    [data-tema="dark"] .leaflet-popup-content-wrapper,[data-tema="dark"] .leaflet-popup-tip,
+    [data-tema="dark"] .leaflet-bar a,[data-tema="dark"] .leaflet-control-attribution{background:#192a36;color:#e4edf2}
+}
+@media print{:root[data-tema="dark"]{color-scheme:light;color:#1b2c38;background:#fff}}

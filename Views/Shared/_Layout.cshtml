@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="~/js/tema.js" asp-append-version="true"></script>
     <title>@ViewData["Title"] · SolarGrid</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -30,6 +31,17 @@
                 </form>
             </div>
         }
+        <button class="selector-tema" id="selector-tema" type="button" role="switch" aria-checked="false" aria-label="Modo oscuro" title="Cambiar a modo oscuro">
+            <span class="selector-tema-perilla" aria-hidden="true">
+                <svg class="tema-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+                </svg>
+                <svg class="tema-luna" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8Z" />
+                </svg>
+            </span>
+        </button>
     </header>
     <main class="contenedor">
         @if (TempData["Exito"] is string exito)
