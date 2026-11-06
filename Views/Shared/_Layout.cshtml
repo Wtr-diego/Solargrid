@@ -1,3 +1,11 @@
+@{
+    var authenticated = User.Identity?.IsAuthenticated == true;
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var manager = User.IsInRole("Administrador") || User.IsInRole("Tecnico");
+    var links = new List<(string Controller, string Label, string Icon)> { ("Home", "Inicio", "home") };
+    if (manager) links.AddRange(new[] { ("Comunidades", "Comunidades", "community"), ("Sistemas", "Sistemas solares", "solar"), ("Equipos", "Equipos", "equipment"), ("Lecturas", "Lecturas", "energy"), ("Reportes", "Reportes", "report") });
+    links.Add(("Incidencias", "Incidencias", "alert"));
+}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,24 +14,16 @@
     <script src="~/js/tema.js" asp-append-version="true"></script>
     <title>@ViewData["Title"] · SolarGrid</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/interfaz.css" asp-append-version="true" />
 </head>
-<body>
+<body class="@(authenticated ? "con-sidebar" : "sin-sidebar")">
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
     <header class="barra">
         <a class="marca" asp-controller="Home" asp-action="Index"><span class="sol">☀</span> SolarGrid</a>
         @if (User.Identity?.IsAuthenticated == true)
         {
-            <nav aria-label="Principal">
-                <a asp-controller="Home" asp-action="Index">Inicio</a>
-                @if (User.IsInRole("Administrador") || User.IsInRole("Tecnico"))
-                {
-                    <a asp-controller="Comunidades" asp-action="Index">Comunidades</a>
-                    <a asp-controller="Sistemas" asp-action="Index">Sistemas solares</a>
-                    <a asp-controller="Equipos" asp-action="Index">Equipos</a>
-                    <a asp-controller="Lecturas" asp-action="Index">Lecturas</a>
-                    <a asp-controller="Reportes" asp-action="Index">Reportes</a>
-                }
-                <a asp-controller="Incidencias" asp-action="Index">Incidencias</a>
-            </nav>
+            <button class="boton-menu" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú de navegación"><partial name="_Icono" model='@("menu")' /></button>
+            <span class="titulo-seccion">@ViewData["Title"]</span>
             <div class="sesion">
                 <span>@User.Identity.Name</span>
                 <form asp-controller="Cuenta" asp-action="Salir" method="post">
@@ -43,7 +43,24 @@
             </span>
         </button>
     </header>
-    <main class="contenedor">
+    @if (authenticated)
+    {
+        <aside class="sidebar" id="menu-principal">
+            <a class="marca sidebar-marca" asp-controller="Home" asp-action="Index"><span class="marca-icono"><partial name="_Icono" model='@("solar")' /></span>SolarGrid</a>
+            <p class="nav-etiqueta">ESPACIO DE TRABAJO</p>
+            <nav aria-label="Principal">
+                @foreach (var link in links)
+                {
+                    var active = currentController == link.Controller;
+                    <a asp-controller="@link.Controller" asp-action="Index" class="nav-enlace @(active ? "activo" : "")" aria-current="@(active ? "page" : null)">
+                        <partial name="_Icono" model="@link.Icon" /><span>@link.Label</span>
+                    </a>
+                }
+            </nav>
+            <div class="sidebar-nota"><partial name="_Icono" model='@("energy")' /><strong>Energía que conecta</strong><span>Gestión solar para tu comunidad.</span></div>
+        </aside>
+    }
+    <main class="contenedor" id="contenido" tabindex="-1">
         @if (TempData["Exito"] is string exito)
         {
             <div class="mensaje exito" role="status">@exito</div>
@@ -55,6 +72,7 @@
         @RenderBody()
     </main>
     <footer class="pie">SolarGrid · Avance técnico · Datos de demostración</footer>
+    <script src="~/js/interfaz.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

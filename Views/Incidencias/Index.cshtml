@@ -1,9 +1,9 @@
 @model List<Incidencia>
 @{ ViewData["Title"] = "Incidencias"; }
 <div class="encabezado"><div><span class="etiqueta">SEGUIMIENTO</span><h1>Incidencias</h1><p class="secundario">Problemas reportados y estado de atención.</p></div><a class="boton boton-primario" asp-action="Crear">+ Reportar problema</a></div>
-<section class="tarjeta tabla-scroll"><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Descripción</th><th>Prioridad</th><th>Estado</th><th></th></tr></thead><tbody>
+<section class="tarjeta tabla-scroll"><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Descripción</th><th>Prioridad</th><th>Estado</th><th><span class="solo-lectores">Acciones</span></th></tr></thead><tbody>
 @foreach (var i in Model)
 {
-<tr><td>@i.FechaCreacion.ToString("dd/MM/yyyy")</td><td>@i.Sistema.Nombre</td><td>@i.Descripcion</td><td><span class="chip">@i.Prioridad</span></td><td><span class="chip">@i.Estado</span></td><td>@if(User.IsInRole("Administrador") || User.IsInRole("Tecnico")){<a asp-action="Estado" asp-route-id="@i.IdIncidencia">Actualizar</a>}</td></tr>
+<tr><td>@i.FechaCreacion.ToString("dd/MM/yyyy")</td><td>@i.Sistema.Nombre</td><td>@i.Descripcion</td><td><span class="chip @(i.Prioridad == "Alta" ? "estado-alerta" : i.Prioridad == "Media" ? "estado-aviso" : "estado-neutral")">@i.Prioridad</span></td><td><span class="chip @(i.Estado == "Activo" || i.Estado == "Operativo" || i.Estado == "Resuelta" || i.Estado == "Cerrada" ? "estado-correcto" : i.Estado == "En proceso" || i.Estado == "Mantenimiento" ? "estado-aviso" : "estado-alerta")">@i.Estado</span></td><td>@if(User.IsInRole("Administrador") || User.IsInRole("Tecnico")){<a asp-action="Estado" asp-route-id="@i.IdIncidencia">Actualizar</a>}</td></tr>
 }
 </tbody></table>@if(Model.Count == 0){<p class="secundario">No hay problemas registrados.</p>}</section>

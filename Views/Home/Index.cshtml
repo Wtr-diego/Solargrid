@@ -1,19 +1,22 @@
 @{ ViewData["Title"] = "Panel principal"; }
-<div class="encabezado"><div><span class="etiqueta">SOLARGRID · DEMOSTRACIÓN</span><h1>Panel principal</h1><p class="secundario">Control sencillo de energía solar para comunidades rurales.</p></div><span class="chip">@(User.IsInRole("Administrador") ? "Administrador" : User.IsInRole("Tecnico") ? "Técnico" : "Usuario de comunidad")</span></div>
+<div class="encabezado encabezado-panel"><div><span class="etiqueta">TU COMUNIDAD, CONECTADA</span><h1>Panel principal</h1><p class="secundario">Control sencillo de energía solar para comunidades rurales.</p></div><span class="chip">@(User.IsInRole("Administrador") ? "Administrador" : User.IsInRole("Tecnico") ? "Técnico" : "Usuario de comunidad")</span></div>
 @if (User.IsInRole("Administrador") || User.IsInRole("Tecnico"))
 {
 <div class="indicadores indicadores-5">
-<article class="indicador"><span>Comunidades</span><strong>@ViewBag.TotalComunidades</strong><small>Registradas</small></article>
-<article class="indicador"><span>Sistemas solares</span><strong>@ViewBag.TotalSistemas</strong><small>Instalados</small></article>
-<article class="indicador"><span>Equipos</span><strong>@ViewBag.TotalEquipos</strong><small>En inventario</small></article>
-<article class="indicador"><span>Lecturas</span><strong>@ViewBag.TotalLecturas</strong><small>Registros de energía</small></article>
-<article class="indicador"><span>Problemas activos</span><strong>@ViewBag.IncidenciasAbiertas</strong><small>Abiertos o en proceso</small></article>
+<article class="indicador indicador-community"><div class="indicador-icono"><partial name="_Icono" model='@("community")' /></div><span>Comunidades</span><strong>@ViewBag.TotalComunidades</strong><small>Registradas</small></article>
+<article class="indicador indicador-solar"><div class="indicador-icono"><partial name="_Icono" model='@("solar")' /></div><span>Sistemas solares</span><strong>@ViewBag.TotalSistemas</strong><small>Instalados</small></article>
+<article class="indicador indicador-equipment"><div class="indicador-icono"><partial name="_Icono" model='@("equipment")' /></div><span>Equipos</span><strong>@ViewBag.TotalEquipos</strong><small>En inventario</small></article>
+<article class="indicador indicador-energy"><div class="indicador-icono"><partial name="_Icono" model='@("energy")' /></div><span>Lecturas</span><strong>@ViewBag.TotalLecturas</strong><small>Registros de energía</small></article>
+<article class="indicador indicador-alert"><div class="indicador-icono"><partial name="_Icono" model='@("alert")' /></div><span>Problemas activos</span><strong>@ViewBag.IncidenciasAbiertas</strong><small>Abiertos o en proceso</small></article>
 </div>
-<section class="tarjeta"><h2>Acciones rápidas</h2><div class="acciones"><a class="boton boton-primario" asp-controller="Comunidades" asp-action="Index">Comunidades</a><a class="boton boton-contorno" asp-controller="Sistemas" asp-action="Index">Sistemas</a><a class="boton boton-contorno" asp-controller="Equipos" asp-action="Crear">Nuevo equipo</a><a class="boton boton-contorno" asp-controller="Lecturas" asp-action="Crear">Nueva lectura</a><a class="boton boton-contorno" asp-controller="Incidencias" asp-action="Crear">Reportar incidencia</a><a class="boton boton-contorno" asp-controller="Reportes" asp-action="Index">Ver reporte</a></div></section>
-<section class="tarjeta tabla-scroll"><h2>Últimas lecturas de energía</h2><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generación</th><th>Consumo</th></tr></thead><tbody>
+<section class="tarjeta accesos"><span class="etiqueta">A UN CLIC</span><h2>Acciones rápidas</h2><p class="secundario">Accede directamente a las tareas de tu comunidad.</p><div class="acciones"><a class="boton boton-primario" asp-controller="Comunidades" asp-action="Index">Comunidades</a><a class="boton boton-contorno" asp-controller="Sistemas" asp-action="Index">Sistemas</a><a class="boton boton-contorno" asp-controller="Equipos" asp-action="Crear">Nuevo equipo</a><a class="boton boton-contorno" asp-controller="Lecturas" asp-action="Crear">Nueva lectura</a><a class="boton boton-contorno" asp-controller="Incidencias" asp-action="Crear">Reportar incidencia</a><a class="boton boton-contorno" asp-controller="Reportes" asp-action="Index">Ver reporte</a></div></section>
+<section class="tarjeta tabla-scroll"><div class="titulo-tabla"><div><span class="etiqueta">ENERGÍA REGISTRADA</span><h2>Últimas lecturas</h2></div><a asp-controller="Lecturas" asp-action="Index">Ver todas <span aria-hidden="true">→</span></a></div><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generación</th><th>Consumo</th></tr></thead><tbody>
 @foreach (var lectura in (List<LecturaEnergia>)ViewBag.UltimasLecturas)
 {<tr><td>@lectura.FechaHora.ToString("dd/MM/yyyy")</td><td>@lectura.Sistema.Nombre</td><td>@lectura.GeneracionKwh kWh</td><td>@lectura.ConsumoKwh kWh</td></tr>}
-</tbody></table></section>
+</tbody></table>
+@if (((List<LecturaEnergia>)ViewBag.UltimasLecturas).Count == 0)
+{ <div class="estado-vacio"><partial name="_Icono" model='@("energy")' /><h3>Aún no hay lecturas</h3><p>Registra la primera lectura para ver la energía de tu comunidad.</p><a class="boton boton-primario" asp-controller="Lecturas" asp-action="Crear">Registrar lectura</a></div> }
+</section>
 }
 else
 {

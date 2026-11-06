@@ -1,0 +1,15 @@
+@model string
+@{
+    var paths = new Dictionary<string, string> {
+        ["home"] = "m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z",
+        ["community"] = "M3 21V9l6-4 6 4v12M9 5V2m6 9 6-3v13M1 21h22M6 12h1m-1 4h1m4-4h1m-1 4h1m6-3h1m-1 4h1",
+        ["solar"] = "M4 13h16l2 8H2ZM12 13v8M3 17h18M12 2v2M5 5l1 1m12 0 1-1M8 10a4 4 0 0 1 8 0",
+        ["equipment"] = "M8 3H4a1 1 0 0 0-1 1v4m13-5h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4m8 0h4a1 1 0 0 0 1-1v-4M8 8h8v8H8Z",
+        ["energy"] = "m13 2-9 12h7l-1 8 10-13h-7Z",
+        ["report"] = "M4 3v18h17M8 16v-5m5 5V7m5 9v-8",
+        ["alert"] = "m12 3 10 18H2ZM12 9v5m0 3v1",
+        ["menu"] = "M4 6h16M4 12h16M4 18h16",
+        ["arrow"] = "M4 12h16m-6-6 6 6-6 6"
+    };
+}
+<svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="@paths.GetValueOrDefault(Model, paths["solar"])" /></svg>
