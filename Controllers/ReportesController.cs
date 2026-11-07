@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SolarGrid.Data;
+using SolarGrid.ViewModels;
 
 namespace SolarGrid.Controllers;
 
@@ -33,6 +34,18 @@ public class ReportesController(SolarGridDbContext db) : Controller
         if (idSistema.HasValue) consulta = consulta.Where(l => l.IdSistema == idSistema.Value);
         ViewBag.Generacion = await consulta.SumAsync(x => (decimal?)x.GeneracionKwh) ?? 0m;
         ViewBag.Consumo = await consulta.SumAsync(x => (decimal?)x.ConsumoKwh) ?? 0m;
+        ViewBag.AlertasConsumo = await consulta
+            .GroupBy(l => new { l.IdSistema, l.Sistema.Nombre, Comunidad = l.Sistema.Comunidad.Nombre })
+            .Select(g => new AlertaConsumoVm
+            {
+                Comunidad = g.Key.Comunidad,
+                Sistema = g.Key.Nombre,
+                GeneracionKwh = g.Sum(l => l.GeneracionKwh),
+                ConsumoKwh = g.Sum(l => l.ConsumoKwh)
+            })
+            .Where(a => a.ConsumoKwh > a.GeneracionKwh)
+            .OrderByDescending(a => a.ConsumoKwh - a.GeneracionKwh)
+            .ToListAsync();
         ViewBag.Total = await consulta.CountAsync();
         var datos = await consulta.OrderByDescending(l => l.FechaHora).Take(500).ToListAsync();
         return View(datos);

@@ -11,6 +11,20 @@
 </section>
 @if(ViewBag.Error == null)
 {
+var alertas = (List<AlertaConsumoVm>)ViewBag.AlertasConsumo;
+@if (alertas.Count > 0)
+{
+<section class="tarjeta alerta-consumo" role="alert">
+    <span class="etiqueta">ALERTA DE CONSUMO ALTO</span>
+    <h2>El consumo superó la generación en el período consultado</h2>
+    <ul class="lista-alertas">
+    @foreach (var alerta in alertas)
+    {
+        <li><strong>@alerta.Comunidad</strong> · @alerta.Sistema: consumo de @alerta.ConsumoKwh.ToString("N2") kWh frente a @alerta.GeneracionKwh.ToString("N2") kWh generados; diferencia de <strong>@alerta.DiferenciaKwh.ToString("N2") kWh</strong>.</li>
+    }
+    </ul>
+</section>
+}
 <div class="indicadores"><article class="indicador"><span>Generación total</span><strong>@ViewBag.Generacion kWh</strong><small>Energía registrada</small></article><article class="indicador"><span>Consumo total</span><strong>@ViewBag.Consumo kWh</strong><small>Energía utilizada</small></article><article class="indicador"><span>Lecturas</span><strong>@ViewBag.Total</strong><small>Total del período; se muestran hasta 500 filas</small></article></div>
 <section class="tarjeta tabla-scroll"><h2>Detalle del período</h2><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generada</th><th>Consumida</th></tr></thead><tbody>
 @foreach(var l in Model){<tr><td>@l.FechaHora.ToString("dd/MM/yyyy HH:mm")</td><td>@l.Sistema.Nombre</td><td>@l.GeneracionKwh kWh</td><td>@l.ConsumoKwh kWh</td></tr>}

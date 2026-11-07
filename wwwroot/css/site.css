@@ -86,3 +86,12 @@ textarea{font-family:inherit;border:1px solid #ccd9dd;background:#fff;color:#263
     [data-tema="dark"] .leaflet-bar a,[data-tema="dark"] .leaflet-control-attribution{background:#192a36;color:#e4edf2}
 }
 @media print{:root[data-tema="dark"]{color-scheme:light;color:#1b2c38;background:#fff}}
+
+/* Alertas de consumo alto */
+.alerta-consumo{background:#fff8ed;border-color:#edc879;border-left:5px solid #cf7718}.alerta-consumo .etiqueta{color:#a8560b}.lista-alertas{margin:12px 0 0;padding-left:22px}.lista-alertas li{margin:9px 0;line-height:1.55;color:#594323}
+
+@media screen {
+    [data-tema="dark"] .alerta-consumo { background: #382b1e; border-color: #9d6d37; }
+    [data-tema="dark"] .alerta-consumo .etiqueta { color: #ffc684; }
+    [data-tema="dark"] .lista-alertas li { color: #ffe0b6; }
+}

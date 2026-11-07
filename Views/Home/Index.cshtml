@@ -9,6 +9,20 @@
 <article class="indicador indicador-energy"><div class="indicador-icono"><partial name="_Icono" model='@("energy")' /></div><span>Lecturas</span><strong>@ViewBag.TotalLecturas</strong><small>Registros de energía</small></article>
 <article class="indicador indicador-alert"><div class="indicador-icono"><partial name="_Icono" model='@("alert")' /></div><span>Problemas activos</span><strong>@ViewBag.IncidenciasAbiertas</strong><small>Abiertos o en proceso</small></article>
 </div>
+@if (((List<AlertaConsumoVm>)ViewBag.AlertasConsumo).Count > 0)
+{
+<section class="tarjeta alerta-consumo" role="alert">
+    <span class="etiqueta">ALERTA DE CONSUMO ALTO</span>
+    <h2>El consumo superó la generación</h2>
+    <p class="secundario">Período: últimos 30 días (@ViewBag.InicioPeriodoAlerta al @ViewBag.FinPeriodoAlerta).</p>
+    <ul class="lista-alertas">
+    @foreach (var alerta in (List<AlertaConsumoVm>)ViewBag.AlertasConsumo)
+    {
+        <li><strong>@alerta.Comunidad</strong> · @alerta.Sistema: consumo de @alerta.ConsumoKwh.ToString("N2") kWh frente a @alerta.GeneracionKwh.ToString("N2") kWh generados; diferencia de <strong>@alerta.DiferenciaKwh.ToString("N2") kWh</strong>.</li>
+    }
+    </ul>
+</section>
+}
 <section class="tarjeta accesos"><span class="etiqueta">A UN CLIC</span><h2>Acciones rápidas</h2><p class="secundario">Accede directamente a las tareas de tu comunidad.</p><div class="acciones"><a class="boton boton-primario" asp-controller="Comunidades" asp-action="Index">Comunidades</a><a class="boton boton-contorno" asp-controller="Sistemas" asp-action="Index">Sistemas</a><a class="boton boton-contorno" asp-controller="Equipos" asp-action="Crear">Nuevo equipo</a><a class="boton boton-contorno" asp-controller="Lecturas" asp-action="Crear">Nueva lectura</a><a class="boton boton-contorno" asp-controller="Incidencias" asp-action="Crear">Reportar incidencia</a><a class="boton boton-contorno" asp-controller="Reportes" asp-action="Index">Ver reporte</a></div></section>
 <section class="tarjeta tabla-scroll"><div class="titulo-tabla"><div><span class="etiqueta">ENERGÍA REGISTRADA</span><h2>Últimas lecturas</h2></div><a asp-controller="Lecturas" asp-action="Index">Ver todas <span aria-hidden="true">→</span></a></div><table><thead><tr><th>Fecha</th><th>Sistema</th><th>Generación</th><th>Consumo</th></tr></thead><tbody>
 @foreach (var lectura in (List<LecturaEnergia>)ViewBag.UltimasLecturas)
