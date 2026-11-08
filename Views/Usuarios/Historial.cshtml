@@ -1,0 +1,58 @@
+@model List<HistorialUsuarioVm>
+@{ ViewData["Title"] = "Historial de usuarios"; }
+
+<div class="encabezado">
+    <div>
+        <span class="etiqueta">ADMINISTRACIÓN</span>
+        <h1>Historial de usuarios</h1>
+        <p class="secundario">Consulta quién hizo cambios en las cuentas y cuándo.</p>
+    </div>
+    <a class="boton boton-contorno" asp-action="Index">Volver a usuarios</a>
+</div>
+
+<section class="tarjeta tabla-scroll">
+    @if (Model.Count == 0)
+    {
+        <p class="secundario">No hay movimientos de usuarios en esta página.</p>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr><th>Fecha y hora</th><th>Administrador</th><th>Cuenta afectada</th><th>Acción</th><th>Detalle</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var movimiento in Model)
+                {
+                    <tr>
+                        <td>@movimiento.FechaHora.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td>@movimiento.Administrador <small class="secundario">#@movimiento.IdAdministrador</small></td>
+                        <td>
+                            @if (movimiento.Usuario != null)
+                            {
+                                <a asp-action="Editar" asp-route-id="@movimiento.IdUsuario">@movimiento.Usuario</a>
+                            }
+                            <small class="secundario">#@movimiento.IdUsuario</small>
+                        </td>
+                        <td><span class="chip">@movimiento.Accion</span></td>
+                        <td>@movimiento.Detalle</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (ViewBag.PaginaAnterior || ViewBag.AntesDe is int)
+    {
+        <nav class="acciones" aria-label="Páginas del historial">
+            @if (ViewBag.PaginaAnterior)
+            {
+                <a class="boton boton-contorno" asp-action="Historial">Más recientes</a>
+            }
+            @if (ViewBag.AntesDe is int antesDe)
+            {
+                <a class="boton boton-contorno" asp-action="Historial" asp-route-antesDe="@antesDe">Más antiguos</a>
+            }
+        </nav>
+    }
+</section>

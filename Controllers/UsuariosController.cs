@@ -18,11 +18,38 @@ public class UsuariosController(
     IPasswordHasher<Usuario> hasher,
     ILogger<UsuariosController> logger) : Controller
 {
+    private int IdAdministrador => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
     [HttpGet]
     public async Task<IActionResult> Index() => View(await db.Usuarios.AsNoTracking()
         .Include(u => u.Comunidad)
         .OrderBy(u => u.Nombre).ThenBy(u => u.Correo)
         .ToListAsync());
+
+    [HttpGet]
+    public async Task<IActionResult> Historial(int? antesDe)
+    {
+        const int tamanoPagina = 50;
+        var movimientos = await db.Historial.AsNoTracking()
+            .Where(h => h.Tabla == nameof(SolarGridDbContext.Usuarios) &&
+                        (!antesDe.HasValue || h.IdHistorial < antesDe.Value))
+            .OrderByDescending(h => h.IdHistorial)
+            .Select(h => new HistorialUsuarioVm(
+                h.IdHistorial, h.FechaHora, h.IdUsuario, h.Usuario.Nombre, h.IdRegistro,
+                db.Usuarios.Where(u => u.IdUsuario == h.IdRegistro).Select(u => u.Nombre).FirstOrDefault(),
+                h.Accion, h.Detalle))
+            .Take(tamanoPagina + 1)
+            .ToListAsync();
+
+        ViewBag.PaginaAnterior = antesDe.HasValue;
+        if (movimientos.Count > tamanoPagina)
+        {
+            movimientos.RemoveAt(tamanoPagina);
+            ViewBag.AntesDe = movimientos[^1].IdHistorial;
+        }
+
+        return View(movimientos);
+    }
 
     [HttpGet]
     public Task<IActionResult> Crear() => MostrarFormulario(new UsuarioVm());
@@ -45,12 +72,30 @@ public class UsuariosController(
             Activo = true
         };
         usuario.PasswordHash = hasher.HashPassword(usuario, vm.Contrasena!);
-        db.Usuarios.Add(usuario);
+        try
+        {
+            await using var transaccion = await db.Database.BeginTransactionAsync(IsolationLevel.Serializable);
+            if (!await AdministradorSigueActivo()) return Forbid();
 
-        if (!await GuardarCambios()) return await MostrarFormulario(vm);
+            db.Usuarios.Add(usuario);
+            if (await GuardarCambios())
+            {
+                RegistrarHistorial(usuario.IdUsuario, "Creación", $"Cuenta activa con rol {MostrarRol(usuario.Rol)}.");
+                if (await GuardarCambios())
+                {
+                    await transaccion.CommitAsync();
+                    TempData["Exito"] = "Usuario registrado correctamente.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+        }
+        catch (SqlException ex) when (ex.Number == 1205)
+        {
+            logger.LogWarning(ex, "Conflicto al registrar un usuario");
+            ModelState.AddModelError("", "Hubo un cambio simultáneo. Intenta guardar nuevamente.");
+        }
 
-        TempData["Exito"] = "Usuario registrado correctamente.";
-        return RedirectToAction(nameof(Index));
+        return await MostrarFormulario(vm);
     }
 
     [HttpGet]
@@ -75,8 +120,7 @@ public class UsuariosController(
         if (vm.Activo is null)
             ModelState.AddModelError(nameof(vm.Activo), "Selecciona el estado de la cuenta.");
 
-        var idAdministrador = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        if (id == idAdministrador)
+        if (id == IdAdministrador)
         {
             if (vm.Rol != "Administrador")
                 ModelState.AddModelError(nameof(vm.Rol), "No puedes cambiar el rol de tu propia cuenta.");
@@ -91,17 +135,33 @@ public class UsuariosController(
         {
             // Conserva el permiso del administrador hasta guardar, incluso si dos administradores se editan entre sí.
             await using var transaccion = await db.Database.BeginTransactionAsync(IsolationLevel.Serializable);
-            if (!await db.Usuarios.AnyAsync(u => u.IdUsuario == idAdministrador && u.Activo && u.Rol == "Administrador"))
-                return Forbid();
+            if (!await AdministradorSigueActivo()) return Forbid();
 
             var usuario = await db.Usuarios.FindAsync(id);
             if (usuario == null) return NotFound();
 
-            usuario.Nombre = vm.Nombre.Trim();
+            var nombre = vm.Nombre.Trim();
+            var activo = vm.Activo!.Value;
+            var cambios = new List<string>();
+            if (usuario.Nombre != nombre) cambios.Add("Nombre");
+            if (usuario.Correo != correo) cambios.Add("Correo");
+            if (usuario.Rol != vm.Rol) cambios.Add($"Rol de {MostrarRol(usuario.Rol)} a {MostrarRol(vm.Rol)}");
+            if (usuario.IdComunidad != vm.IdComunidad) cambios.Add("Comunidad asignada");
+
+            var accion = "Edición";
+            if (usuario.Activo != activo)
+            {
+                accion = activo ? "Reactivación" : "Desactivación";
+                cambios.Add(activo ? "Estado de Inactivo a Activo" : "Estado de Activo a Inactivo");
+            }
+
+            if (cambios.Count > 0) RegistrarHistorial(id, accion, string.Join(", ", cambios) + ".");
+
+            usuario.Nombre = nombre;
             usuario.Correo = correo;
             usuario.Rol = vm.Rol;
             usuario.IdComunidad = vm.IdComunidad;
-            usuario.Activo = vm.Activo!.Value;
+            usuario.Activo = activo;
 
             if (await GuardarCambios())
             {
@@ -117,6 +177,26 @@ public class UsuariosController(
         }
 
         return await MostrarFormulario(vm, id);
+    }
+
+    private Task<bool> AdministradorSigueActivo()
+    {
+        var id = IdAdministrador;
+        return db.Usuarios.AnyAsync(u => u.IdUsuario == id && u.Activo && u.Rol == "Administrador");
+    }
+
+    private static string MostrarRol(string rol) => rol == "Tecnico" ? "Técnico" : rol;
+
+    private void RegistrarHistorial(int idUsuario, string accion, string detalle)
+    {
+        db.Historial.Add(new Historial
+        {
+            IdUsuario = IdAdministrador,
+            Tabla = nameof(SolarGridDbContext.Usuarios),
+            IdRegistro = idUsuario,
+            Accion = accion,
+            Detalle = detalle
+        });
     }
 
     private async Task<string> ValidarDatos(UsuarioVm vm, int? id = null)

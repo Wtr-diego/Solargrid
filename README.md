@@ -6,6 +6,7 @@ Aplicación web académica para gestionar sistemas de energía solar comunitario
 
 - Inicio y cierre de sesión con roles Administrador, Técnico y Comunidad.
 - Gestión de usuarios desde el menú **Usuarios** del administrador: alta, edición, asignación de rol y comunidad, desactivación y reactivación.
+- Historial de usuarios con la fecha, el administrador responsable, la cuenta afectada y los campos que cambiaron.
 - Registro, consulta y edición de comunidades y equipos.
 - Registro y consulta de sistemas solares asociados con comunidades.
 - Registro manual de generación y consumo de energía.
@@ -52,7 +53,7 @@ La contraseña de estas cuentas ficticias es `DemoSolar2026!`, definida en `Data
 | `SQL` | Creación y verificación del esquema |
 | `DOCUMENTACION/Entrega` | Informe y evidencias de la evaluación |
 
-La base contempla nueve tablas: Comunidades, Usuarios, SistemasSolares, Equipos, UbicacionesPanel, LecturasEnergia, Incidencias, Reportes e Historial. Las tablas Reportes e Historial aún no reciben registros desde los flujos actuales.
+La base contempla nueve tablas: Comunidades, Usuarios, SistemasSolares, Equipos, UbicacionesPanel, LecturasEnergia, Incidencias, Reportes e Historial. La tabla Historial guarda los cambios de cuentas. La tabla Reportes aún no recibe registros desde los flujos actuales.
 
 ## Estado y pruebas
 
@@ -63,7 +64,7 @@ Hallazgos pendientes del formulario de equipos:
 - Un código vacío puede provocar HTTP 500 por llamar `Trim()` antes de validar el modelo.
 - Marca y Modelo se exigen implícitamente y muestran mensajes en inglés cuando están vacíos; debe definirse su obligatoriedad y ajustar las validaciones.
 
-También quedan pendientes el historial automático, la persistencia de reportes y pruebas adicionales de rendimiento, compatibilidad y recuperación.
+También quedan pendientes la persistencia de reportes y pruebas adicionales de rendimiento, compatibilidad y recuperación.
 
 - [Informe de avance técnico y pruebas](DOCUMENTACION/Entrega/Desarrollo%20Web%20-%20SolarGrid%20-%20Avance%20y%20pruebas.docx)
 - [Resultados funcionales](DOCUMENTACION/Entrega/Evidencias/resultados.json)
