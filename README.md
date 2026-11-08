@@ -5,6 +5,7 @@ Aplicación web académica para gestionar sistemas de energía solar comunitario
 ## Funcionalidades
 
 - Inicio y cierre de sesión con roles Administrador, Técnico y Comunidad.
+- Gestión de usuarios desde el menú **Usuarios** del administrador: alta, edición, asignación de rol y comunidad, desactivación y reactivación.
 - Registro, consulta y edición de comunidades y equipos.
 - Registro y consulta de sistemas solares asociados con comunidades.
 - Registro manual de generación y consumo de energía.
@@ -62,7 +63,7 @@ Hallazgos pendientes del formulario de equipos:
 - Un código vacío puede provocar HTTP 500 por llamar `Trim()` antes de validar el modelo.
 - Marca y Modelo se exigen implícitamente y muestran mensajes en inglés cuando están vacíos; debe definirse su obligatoriedad y ajustar las validaciones.
 
-También quedan pendientes la administración de usuarios, el historial automático, la persistencia de reportes y pruebas adicionales de rendimiento, compatibilidad y recuperación.
+También quedan pendientes el historial automático, la persistencia de reportes y pruebas adicionales de rendimiento, compatibilidad y recuperación.
 
 - [Informe de avance técnico y pruebas](DOCUMENTACION/Entrega/Desarrollo%20Web%20-%20SolarGrid%20-%20Avance%20y%20pruebas.docx)
 - [Resultados funcionales](DOCUMENTACION/Entrega/Evidencias/resultados.json)

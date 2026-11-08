@@ -4,6 +4,7 @@
     var manager = User.IsInRole("Administrador") || User.IsInRole("Tecnico");
     var links = new List<(string Controller, string Label, string Icon)> { ("Home", "Inicio", "home") };
     if (manager) links.AddRange(new[] { ("Comunidades", "Comunidades", "community"), ("Sistemas", "Sistemas solares", "solar"), ("Equipos", "Equipos", "equipment"), ("Lecturas", "Lecturas", "energy"), ("Reportes", "Reportes", "report") });
+    if (User.IsInRole("Administrador")) links.Add(("Usuarios", "Usuarios", "community"));
     links.Add(("Incidencias", "Incidencias", "alert"));
 }
 <!DOCTYPE html>

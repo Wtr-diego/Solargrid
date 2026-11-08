@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,36 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SameSite = SameSiteMode.Lax;
         options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromHours(2);
+        options.Events.OnValidatePrincipal = async context =>
+        {
+            var principal = context.Principal;
+            if (principal != null && int.TryParse(principal.FindFirstValue(ClaimTypes.NameIdentifier), out var id))
+            {
+                var db = context.HttpContext.RequestServices.GetRequiredService<SolarGridDbContext>();
+                var usuario = await db.Usuarios
+                    .Where(u => u.IdUsuario == id && u.Activo)
+                    .Select(u => new { u.Nombre, u.Rol })
+                    .SingleOrDefaultAsync(context.HttpContext.RequestAborted);
+
+                if (usuario != null && principal.IsInRole(usuario.Rol))
+                {
+                    if (principal.Identity is ClaimsIdentity identity &&
+                        identity.FindFirst(ClaimTypes.Name) is Claim nombre && nombre.Value != usuario.Nombre)
+                    {
+                        var actualizado = new ClaimsIdentity(identity);
+                        actualizado.RemoveClaim(actualizado.FindFirst(ClaimTypes.Name)!);
+                        actualizado.AddClaim(new Claim(ClaimTypes.Name, usuario.Nombre));
+                        context.ReplacePrincipal(new ClaimsPrincipal(actualizado));
+                        context.ShouldRenew = true;
+                    }
+
+                    return;
+                }
+            }
+
+            context.RejectPrincipal();
+            await context.HttpContext.SignOutAsync(context.Scheme.Name);
+        };
     });
 builder.Services.AddAuthorization();
 

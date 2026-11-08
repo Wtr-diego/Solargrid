@@ -1,0 +1,60 @@
+@model UsuarioVm
+@{
+    int? id = ViewBag.IdUsuario;
+    var editar = id.HasValue;
+    var accion = editar ? "Editar" : "Crear";
+    ViewData["Title"] = editar ? "Editar usuario" : "Registrar usuario";
+}
+
+<section class="tarjeta formulario">
+    <h1>@ViewData["Title"]</h1>
+    <form asp-action="@accion" asp-route-id="@id" method="post">
+        <div asp-validation-summary="ModelOnly" class="errores"></div>
+
+        <label asp-for="Nombre">Nombre</label>
+        <input asp-for="Nombre" autocomplete="off" />
+        <span asp-validation-for="Nombre" class="errores"></span>
+
+        <label asp-for="Correo">Correo electrónico</label>
+        <input asp-for="Correo" type="email" autocomplete="off" />
+        <span asp-validation-for="Correo" class="errores"></span>
+
+        <label asp-for="Rol">Rol</label>
+        <select asp-for="Rol">
+            <option value="">Selecciona un rol</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Tecnico">Técnico</option>
+            <option value="Comunidad">Comunidad</option>
+        </select>
+        <span asp-validation-for="Rol" class="errores"></span>
+
+        <label asp-for="IdComunidad">Comunidad</label>
+        <select asp-for="IdComunidad" asp-items="ViewBag.Comunidades" aria-describedby="ayuda-comunidad">
+            <option value="">Sin comunidad</option>
+        </select>
+        <small id="ayuda-comunidad" class="secundario">Obligatoria para el rol Comunidad.</small>
+        <span asp-validation-for="IdComunidad" class="errores"></span>
+
+        @if (editar)
+        {
+            <label asp-for="Activo">Estado de la cuenta</label>
+            <select asp-for="Activo" aria-describedby="ayuda-estado">
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+            </select>
+            <small id="ayuda-estado" class="secundario">Una cuenta inactiva pierde el acceso a SolarGrid.</small>
+            <span asp-validation-for="Activo" class="errores"></span>
+        }
+        else
+        {
+            <label asp-for="Contrasena">Contraseña inicial</label>
+            <input asp-for="Contrasena" autocomplete="new-password" required minlength="8" maxlength="128" />
+            <span asp-validation-for="Contrasena" class="errores"></span>
+        }
+
+        <div class="acciones">
+            <button class="boton boton-primario" type="submit">@(editar ? "Guardar cambios" : "Registrar usuario")</button>
+            <a class="boton boton-contorno" asp-action="Index">Cancelar</a>
+        </div>
+    </form>
+</section>
