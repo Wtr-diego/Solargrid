@@ -1,4 +1,5 @@
 @{ ViewData["Title"] = "Panel principal"; }
+@section Styles { <link rel="stylesheet" href="~/css/simulacion.css" asp-append-version="true" /> }
 <div class="encabezado encabezado-panel"><div><span class="etiqueta">TU COMUNIDAD, CONECTADA</span><h1>Panel principal</h1><p class="secundario">Control sencillo de energía solar para comunidades rurales.</p></div><span class="chip">@(User.IsInRole("Administrador") ? "Administrador" : User.IsInRole("Tecnico") ? "Técnico" : "Usuario de comunidad")</span></div>
 @if (User.IsInRole("Administrador") || User.IsInRole("Tecnico"))
 {
@@ -9,6 +10,7 @@
 <article class="indicador indicador-energy"><div class="indicador-icono"><partial name="_Icono" model='@("energy")' /></div><span>Lecturas</span><strong>@ViewBag.TotalLecturas</strong><small>Registros de energía</small></article>
 <article class="indicador indicador-alert"><div class="indicador-icono"><partial name="_Icono" model='@("alert")' /></div><span>Problemas activos</span><strong>@ViewBag.IncidenciasAbiertas</strong><small>Abiertos o en proceso</small></article>
 </div>
+<partial name="_ResumenSimulacion" />
 @if (((List<AlertaConsumoVm>)ViewBag.AlertasConsumo).Count > 0)
 {
 <section class="tarjeta alerta-consumo" role="alert">
@@ -36,4 +38,5 @@ else
 {
 <section class="tarjeta"><h2>Bienvenido a SolarGrid</h2><p class="secundario">Puedes revisar los problemas reportados por tu comunidad y avisar si hay una falla.</p><div class="acciones"><a class="boton boton-primario" asp-controller="Incidencias" asp-action="Index">Ver incidencias</a><a class="boton boton-contorno" asp-controller="Incidencias" asp-action="Crear">Reportar problema</a></div></section>
 }
-<section class="mensaje demo">Los datos iniciales son de ejemplo para presentar el proyecto. Las lecturas se ingresan manualmente; el sitio no se conecta a paneles reales.</section>
+<section class="mensaje demo">Los datos iniciales son de ejemplo. Las lecturas pueden ingresarse manualmente o generarse con la simulación solar; el sitio no se conecta a paneles reales.</section>
+@section Scripts { <script src="~/js/simulacion.js" asp-append-version="true" defer></script> }

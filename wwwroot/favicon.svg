@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>SolarGrid</title>
+  <rect width="32" height="32" rx="7" fill="#146c63" />
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M16 4v2M7 7l1.5 1.5M25 7l-1.5 1.5M11 13a5 5 0 0 1 10 0" stroke="#ffd166" />
+    <path d="M7 17h18l3 10H4ZM16 17v10M6 22h20" stroke="#fff" />
+  </g>
+</svg>

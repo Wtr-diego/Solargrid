@@ -1,0 +1,19 @@
+<section class="tarjeta sim-resumen" data-simulacion data-estado-url="@Url.Action("Estado", "Simulacion")" aria-labelledby="sim-resumen-titulo">
+    <div class="sim-cabecera">
+        <div><span class="etiqueta">LABORATORIO SOLAR · DATOS SIMULADOS</span><h2 id="sim-resumen-titulo">Energía de la simulación</h2><p class="secundario"><span data-sim="lugar">El Salvador</span> · <span data-sim="fecha">Cargando fecha…</span></p></div>
+        <div class="sim-estado"><span class="chip estado-neutral" data-sim="estado">Cargando…</span>
+        @if (ViewContext.RouteData.Values["controller"]?.ToString() != "Simulacion")
+        { <a class="boton boton-primario" asp-controller="Simulacion" asp-action="Index">Abrir simulación</a> }
+        </div>
+    </div>
+    <div class="sim-metricas">
+        <article class="sim-metrica sim-metrica-solar"><span>Generación solar</span><strong><span data-sim="generacionKwh">0,00</span> <small>kWh</small></strong><p>Energía producida por los paneles.</p></article>
+        <article class="sim-metrica"><span>Consumo total</span><strong><span data-sim="consumoKwh">0,00</span> <small>kWh</small></strong><p>Demanda de la vivienda simulada.</p></article>
+        <article class="sim-metrica"><span>Solar consumida</span><strong><span data-sim="autoconsumoKwh">0,00</span> <small>kWh</small></strong><p>Energía solar utilizada por la vivienda.</p></article>
+        <article class="sim-metrica"><span>Energía de la red</span><strong><span data-sim="importacionKwh">0,00</span> <small>kWh</small></strong><p>Demanda que los paneles no cubren.</p></article>
+        <article class="sim-metrica"><span>Excedente solar</span><strong><span data-sim="excedenteKwh">0,00</span> <small>kWh</small></strong><p>Producción disponible sin consumir.</p></article>
+        <article class="sim-metrica"><span>Cobertura solar</span><strong><span data-sim="coberturaPorcentaje">0,0</span> <small>%</small></strong><p>Consumo atendido con energía solar.</p></article>
+    </div>
+    <div class="sim-progreso"><label for="sim-progreso">Día simulado: <span data-sim="avance">0 de 24 horas</span></label><progress id="sim-progreso" max="24" value="0">0 de 24 horas</progress></div>
+    <p class="sim-aviso" data-sim="conexion" role="status">Conectando con el simulador…</p>
+</section>

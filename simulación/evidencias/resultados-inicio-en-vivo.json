@@ -1,0 +1,63 @@
+{
+  "fechaEjecucionUtc": "2026-11-09T02:14:07.842Z",
+  "baseUrl": "http://127.0.0.1:5187",
+  "baseDePruebasConfirmadaPorOperador": "SolarGrid_Pruebas_Simulacion_20261108",
+  "resumen": "Comprobación adicional de actualización del inicio aprobada.",
+  "resultados": [
+    {
+      "id": "I01",
+      "nombre": "Acceso anónimo protegido",
+      "entrada": "GET /Simulacion sin sesión",
+      "esperado": "Redirección al inicio de sesión",
+      "obtenido": "http://127.0.0.1:5187/Cuenta/Ingresar?ReturnUrl=%2FSimulacion",
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I02",
+      "nombre": "Usuario de comunidad sin permisos",
+      "entrada": "Cuenta vecino",
+      "esperado": "Acceso denegado al módulo y a su estado",
+      "obtenido": {
+        "pagina": "http://127.0.0.1:5187/Cuenta/SinPermiso?ReturnUrl=%2FSimulacion",
+        "estadoHttp": 302
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I03",
+      "nombre": "Técnico autorizado",
+      "entrada": "Cuenta tecnico",
+      "esperado": "Módulo y JSON accesibles",
+      "obtenido": "Módulo visible; API HTTP 200; total de 24 horas.",
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I04",
+      "nombre": "Administrador, título y navegación",
+      "entrada": "Cuenta admin",
+      "esperado": "Módulo visible, título SolarGrid y enlace en el menú",
+      "obtenido": {
+        "titulo": "SolarGrid · Simulación solar",
+        "favicon": "/favicon.svg?v=CK6xbavABcMZ8Tqv0Vnf8Q9yAFsiGFtZpsYYawLRM60"
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I27",
+      "nombre": "Actualización automática del panel principal",
+      "entrada": "Nuevo escenario en ejecución; navegar a Inicio sin recargar",
+      "esperado": "Progreso y consumo crecen en la página principal mientras el servidor genera datos",
+      "obtenido": {
+        "horasIniciales": 1,
+        "horasFinales": 3,
+        "consumoInicialKwh": "0,09",
+        "consumoFinalKwh": "0,24",
+        "recargas": 0,
+        "evidencia": "panel-principal-en-ejecucion.png"
+      },
+      "estado": "Aprobada"
+    }
+  ],
+  "erroresJavaScript": [],
+  "erroresConsola": []
+}

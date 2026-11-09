@@ -1,0 +1,678 @@
+{
+  "fechaEjecucionUtc": "2026-11-09T02:12:05.737Z",
+  "baseUrl": "http://127.0.0.1:5187",
+  "baseDePruebasConfirmadaPorOperador": "SolarGrid_Pruebas_Simulacion_20261108",
+  "idSimulacion": "e30c50df-a0b8-46a8-8acf-074e5f77a71a",
+  "idSistemaGuardado": 3,
+  "resumen": "26/26 pruebas aprobadas",
+  "resultados": [
+    {
+      "id": "I01",
+      "nombre": "Acceso anónimo protegido",
+      "entrada": "GET /Simulacion sin sesión",
+      "esperado": "Redirección al inicio de sesión",
+      "obtenido": "http://127.0.0.1:5187/Cuenta/Ingresar?ReturnUrl=%2FSimulacion",
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I02",
+      "nombre": "Usuario de comunidad sin permisos",
+      "entrada": "Cuenta vecino",
+      "esperado": "Acceso denegado al módulo y a su estado",
+      "obtenido": {
+        "pagina": "http://127.0.0.1:5187/Cuenta/SinPermiso?ReturnUrl=%2FSimulacion",
+        "estadoHttp": 302
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I03",
+      "nombre": "Técnico autorizado",
+      "entrada": "Cuenta tecnico",
+      "esperado": "Módulo y JSON accesibles",
+      "obtenido": "Módulo visible; API HTTP 200; total de 24 horas.",
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I04",
+      "nombre": "Administrador, título y navegación",
+      "entrada": "Cuenta admin",
+      "esperado": "Módulo visible, título SolarGrid y enlace en el menú",
+      "obtenido": {
+        "titulo": "SolarGrid · Simulación solar",
+        "favicon": "/favicon.svg?v=CK6xbavABcMZ8Tqv0Vnf8Q9yAFsiGFtZpsYYawLRM60"
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I05",
+      "nombre": "Antifalsificación",
+      "entrada": "POST Iniciar sin token",
+      "esperado": "HTTP 400 y ninguna lectura generada",
+      "obtenido": "HTTP 400; estado conservado.",
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I06",
+      "nombre": "Validación: ubicación desconocida",
+      "entrada": {
+        "Ubicacion": "no-existe"
+      },
+      "esperado": "HTTP 400, mensaje y sesión intacta",
+      "obtenido": {
+        "error": "Selecciona una ubicación disponible de El Salvador."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I07",
+      "nombre": "Validación: clima desconocido",
+      "entrada": {
+        "Clima": "TormentaInexistente"
+      },
+      "esperado": "HTTP 400, mensaje y sesión intacta",
+      "obtenido": {
+        "error": "Selecciona un escenario de clima válido."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I08",
+      "nombre": "Validación: potencia fuera de rango",
+      "entrada": {
+        "PotenciaPanelW": "0"
+      },
+      "esperado": "HTTP 400, mensaje y sesión intacta",
+      "obtenido": {
+        "error": "La potencia debe estar entre 100 y 1000 W."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I09",
+      "nombre": "Validación: potencia sin múltiplo de 10",
+      "entrada": {
+        "PotenciaPanelW": "455"
+      },
+      "esperado": "HTTP 400, mensaje y sesión intacta",
+      "obtenido": {
+        "error": "La potencia debe ser un múltiplo de 10 W."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I10",
+      "nombre": "Validación: cantidad fuera de rango",
+      "entrada": {
+        "CantidadPaneles": "25"
+      },
+      "esperado": "HTTP 400, mensaje y sesión intacta",
+      "obtenido": {
+        "error": "Selecciona entre 1 y 24 paneles."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I11",
+      "nombre": "Validación: factor de consumo fuera de rango",
+      "entrada": {
+        "FactorConsumo": "0"
+      },
+      "esperado": "HTTP 400, mensaje y sesión intacta",
+      "obtenido": {
+        "error": "El factor de consumo debe estar entre 0.25 y 3."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I12",
+      "nombre": "Aplicar escenario desde la interfaz",
+      "entrada": {
+        "Ubicacion": "chalatenango",
+        "Clima": "Soleado",
+        "PotenciaPanelW": "450",
+        "CantidadPaneles": "1",
+        "FactorConsumo": "1"
+      },
+      "esperado": "Chalatenango, 450 W, soleado, 0 lecturas y sesión nueva",
+      "obtenido": {
+        "id": "e30c50df-a0b8-46a8-8acf-074e5f77a71a",
+        "lugar": {
+          "id": "chalatenango",
+          "nombre": "Chalatenango",
+          "latitud": 14.0333,
+          "longitud": -88.9333,
+          "temperaturaBaseC": 28
+        },
+        "configuracion": {
+          "ubicacion": "chalatenango",
+          "clima": "Soleado",
+          "potenciaPanelW": 450,
+          "cantidadPaneles": 1,
+          "factorConsumo": 1
+        }
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I13",
+      "nombre": "No guardar una simulación incompleta",
+      "entrada": "Guardar con 0 horas",
+      "esperado": "HTTP 409 y mensaje claro",
+      "obtenido": {
+        "error": "Completa las 24 horas antes de guardar las lecturas."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I14",
+      "nombre": "Protección contra una pestaña con sesión anterior",
+      "entrada": "Iniciar con ID previo al reinicio",
+      "esperado": "HTTP 409 sin comenzar el reloj",
+      "obtenido": {
+        "error": "Otra pestaña cambió la simulación. Actualiza los datos antes de continuar."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I15",
+      "nombre": "Reloj automático y pausa",
+      "entrada": "Iniciar; esperar 3 horas; pausar y esperar 2.4 segundos",
+      "esperado": "Avanza automáticamente y se detiene al pausar",
+      "obtenido": {
+        "horasAlPausar": 3,
+        "horasDespuesDeEsperar": 3
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I16",
+      "nombre": "Continuar y avance manual",
+      "entrada": "Continuar, pausar y Avanzar 1 hora",
+      "esperado": "Reanuda el reloj y agrega exactamente una lectura manual",
+      "obtenido": {
+        "horasAntes": 3,
+        "horasReanudadas": 4,
+        "horasAvanceManual": 5
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I17",
+      "nombre": "Completar el día y conservar energía",
+      "entrada": "Completar el día",
+      "esperado": "24 intervalos con balances y totales correctos",
+      "obtenido": {
+        "id": "e30c50df-a0b8-46a8-8acf-074e5f77a71a",
+        "estado": "Completada",
+        "fecha": "2026-11-07T00:00:00",
+        "configuracion": {
+          "ubicacion": "chalatenango",
+          "clima": "Soleado",
+          "potenciaPanelW": 450,
+          "cantidadPaneles": 1,
+          "factorConsumo": 1
+        },
+        "lugar": {
+          "id": "chalatenango",
+          "nombre": "Chalatenango",
+          "latitud": 14.0333,
+          "longitud": -88.9333,
+          "temperaturaBaseC": 28
+        },
+        "potenciaInstaladaW": 450,
+        "horasCompletadas": 24,
+        "totalHoras": 24,
+        "intervaloSegundos": 2,
+        "generacionKwh": 2.5,
+        "consumoKwh": 5.15,
+        "autoconsumoKwh": 1.7,
+        "importacionKwh": 3.45,
+        "excedenteKwh": 0.8,
+        "coberturaPorcentaje": 33,
+        "idSistemaGuardado": null,
+        "lecturas": [
+          {
+            "hora": "2026-11-07T00:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 23.4,
+            "temperaturaPanelC": 23.4,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 85.6,
+            "generacionKwh": 0,
+            "consumoKwh": 0.09,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.09,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T01:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 23,
+            "temperaturaPanelC": 23,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 79.9,
+            "generacionKwh": 0,
+            "consumoKwh": 0.08,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.08,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T02:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 23,
+            "temperaturaPanelC": 23,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 74.5,
+            "generacionKwh": 0,
+            "consumoKwh": 0.07,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.07,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T03:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 23.4,
+            "temperaturaPanelC": 23.4,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 85.6,
+            "generacionKwh": 0,
+            "consumoKwh": 0.09,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.09,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T04:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 24,
+            "temperaturaPanelC": 24,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 79.8,
+            "generacionKwh": 0,
+            "consumoKwh": 0.08,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.08,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T05:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 25,
+            "temperaturaPanelC": 25,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 74.6,
+            "generacionKwh": 0,
+            "consumoKwh": 0.07,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.07,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T06:00:00",
+            "irradianciaWm2": 124,
+            "temperaturaAmbienteC": 26.1,
+            "temperaturaPanelC": 29.8,
+            "potenciaSolarW": 47.1,
+            "potenciaConsumoW": 374.7,
+            "generacionKwh": 0.05,
+            "consumoKwh": 0.37,
+            "autoconsumoKwh": 0.05,
+            "importacionKwh": 0.32,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T07:00:00",
+            "irradianciaWm2": 363.5,
+            "temperaturaAmbienteC": 27.3,
+            "temperaturaPanelC": 38.3,
+            "potenciaSolarW": 133.2,
+            "potenciaConsumoW": 348.8,
+            "generacionKwh": 0.13,
+            "consumoKwh": 0.35,
+            "autoconsumoKwh": 0.13,
+            "importacionKwh": 0.22,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T08:00:00",
+            "irradianciaWm2": 578.3,
+            "temperaturaAmbienteC": 28.7,
+            "temperaturaPanelC": 46,
+            "potenciaSolarW": 205,
+            "potenciaConsumoW": 326.4,
+            "generacionKwh": 0.21,
+            "consumoKwh": 0.33,
+            "autoconsumoKwh": 0.21,
+            "importacionKwh": 0.12,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T09:00:00",
+            "irradianciaWm2": 753.7,
+            "temperaturaAmbienteC": 29.9,
+            "temperaturaPanelC": 52.5,
+            "potenciaSolarW": 259.6,
+            "potenciaConsumoW": 171.4,
+            "generacionKwh": 0.26,
+            "consumoKwh": 0.17,
+            "autoconsumoKwh": 0.17,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.09
+          },
+          {
+            "hora": "2026-11-07T10:00:00",
+            "irradianciaWm2": 877.7,
+            "temperaturaAmbienteC": 31,
+            "temperaturaPanelC": 57.4,
+            "potenciaSolarW": 295.7,
+            "potenciaConsumoW": 159.2,
+            "generacionKwh": 0.3,
+            "consumoKwh": 0.16,
+            "autoconsumoKwh": 0.16,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.14
+          },
+          {
+            "hora": "2026-11-07T11:00:00",
+            "irradianciaWm2": 941.9,
+            "temperaturaAmbienteC": 32,
+            "temperaturaPanelC": 60.2,
+            "potenciaSolarW": 313.1,
+            "potenciaConsumoW": 149.4,
+            "generacionKwh": 0.31,
+            "consumoKwh": 0.15,
+            "autoconsumoKwh": 0.15,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.16
+          },
+          {
+            "hora": "2026-11-07T12:00:00",
+            "irradianciaWm2": 941.9,
+            "temperaturaAmbienteC": 32.6,
+            "temperaturaPanelC": 60.9,
+            "potenciaSolarW": 312.2,
+            "potenciaConsumoW": 171.5,
+            "generacionKwh": 0.31,
+            "consumoKwh": 0.17,
+            "autoconsumoKwh": 0.17,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.14
+          },
+          {
+            "hora": "2026-11-07T13:00:00",
+            "irradianciaWm2": 877.7,
+            "temperaturaAmbienteC": 33,
+            "temperaturaPanelC": 59.3,
+            "potenciaSolarW": 293.1,
+            "potenciaConsumoW": 159,
+            "generacionKwh": 0.29,
+            "consumoKwh": 0.16,
+            "autoconsumoKwh": 0.16,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.13
+          },
+          {
+            "hora": "2026-11-07T14:00:00",
+            "irradianciaWm2": 753.7,
+            "temperaturaAmbienteC": 33,
+            "temperaturaPanelC": 55.6,
+            "potenciaSolarW": 256,
+            "potenciaConsumoW": 149.5,
+            "generacionKwh": 0.26,
+            "consumoKwh": 0.15,
+            "autoconsumoKwh": 0.15,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.11
+          },
+          {
+            "hora": "2026-11-07T15:00:00",
+            "irradianciaWm2": 578.3,
+            "temperaturaAmbienteC": 32.6,
+            "temperaturaPanelC": 50,
+            "potenciaSolarW": 201.5,
+            "potenciaConsumoW": 171.6,
+            "generacionKwh": 0.2,
+            "consumoKwh": 0.17,
+            "autoconsumoKwh": 0.17,
+            "importacionKwh": 0,
+            "excedenteKwh": 0.03
+          },
+          {
+            "hora": "2026-11-07T16:00:00",
+            "irradianciaWm2": 363.5,
+            "temperaturaAmbienteC": 32,
+            "temperaturaPanelC": 42.9,
+            "potenciaSolarW": 130.6,
+            "potenciaConsumoW": 158.8,
+            "generacionKwh": 0.13,
+            "consumoKwh": 0.16,
+            "autoconsumoKwh": 0.13,
+            "importacionKwh": 0.03,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T17:00:00",
+            "irradianciaWm2": 124,
+            "temperaturaAmbienteC": 31,
+            "temperaturaPanelC": 34.8,
+            "potenciaSolarW": 46.1,
+            "potenciaConsumoW": 392.7,
+            "generacionKwh": 0.05,
+            "consumoKwh": 0.39,
+            "autoconsumoKwh": 0.05,
+            "importacionKwh": 0.34,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T18:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 29.9,
+            "temperaturaPanelC": 29.9,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 450.7,
+            "generacionKwh": 0,
+            "consumoKwh": 0.45,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.45,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T19:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 28.7,
+            "temperaturaPanelC": 28.7,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 416.3,
+            "generacionKwh": 0,
+            "consumoKwh": 0.42,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.42,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T20:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 27.3,
+            "temperaturaPanelC": 27.3,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 393,
+            "generacionKwh": 0,
+            "consumoKwh": 0.39,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.39,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T21:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 26.1,
+            "temperaturaPanelC": 26.1,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 450.9,
+            "generacionKwh": 0,
+            "consumoKwh": 0.45,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.45,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T22:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 25,
+            "temperaturaPanelC": 25,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 118.8,
+            "generacionKwh": 0,
+            "consumoKwh": 0.12,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.12,
+            "excedenteKwh": 0
+          },
+          {
+            "hora": "2026-11-07T23:00:00",
+            "irradianciaWm2": 0,
+            "temperaturaAmbienteC": 24,
+            "temperaturaPanelC": 24,
+            "potenciaSolarW": 0,
+            "potenciaConsumoW": 112.4,
+            "generacionKwh": 0,
+            "consumoKwh": 0.11,
+            "autoconsumoKwh": 0,
+            "importacionKwh": 0.11,
+            "excedenteKwh": 0
+          }
+        ]
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I18",
+      "nombre": "Guardar e impedir duplicados",
+      "entrada": "Guardar desde interfaz; repetir Guardar dos veces por API",
+      "esperado": "Un único ID de sistema y 24 lecturas",
+      "obtenido": {
+        "idSistemaGuardado": 3,
+        "repeticiones": 2,
+        "lecturas": 24
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I19",
+      "nombre": "Reporte con datos persistidos y sin duplicados",
+      "entrada": "Reporte del sistema y fecha simulados",
+      "esperado": "24 filas; totales iguales al simulador",
+      "obtenido": {
+        "filas": 24,
+        "generacionKwh": 2.5,
+        "consumoKwh": 5.15,
+        "evidencia": "reporte-guardado.png"
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I20",
+      "nombre": "Panel virtual integrado al mapa",
+      "entrada": "Datos serializados de /Comunidades",
+      "esperado": "Paneles y coordenadas del escenario guardado",
+      "obtenido": {
+        "paneles": [
+          {
+            "IdEquipo": 6,
+            "Codigo": "SIM-e30c50dfa0b846a88acf074e5f77a71a-01",
+            "Estado": "Operativo",
+            "Sistema": "[SIM] Chalatenango · 07/11/2026 · e30c50df",
+            "Comunidad": "[SIM] Demostración El Salvador",
+            "IdComunidad": 3,
+            "Latitud": 14.0333,
+            "Longitud": -88.9333
+          }
+        ],
+        "alcance": "Se verificó el contenido del mapa sin cargar Leaflet ni mosaicos externos."
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I21",
+      "nombre": "CSV completo y etiquetado",
+      "entrada": "GET /Simulacion/Exportar",
+      "esperado": "24 registros, 20 columnas, origen SIMULADO y valores del escenario",
+      "obtenido": {
+        "registros": 24,
+        "columnas": 20,
+        "evidencia": "SolarGrid-simulacion.csv"
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I22",
+      "nombre": "Panel principal conectado",
+      "entrada": "Inicio después del guardado",
+      "esperado": "Resumen con mismos valores y estado de la simulación",
+      "obtenido": {
+        "valoresCoinciden": true,
+        "evidencias": [
+          "panel-principal.png",
+          "resumen-principal.png"
+        ]
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I23",
+      "nombre": "Interfaz completa en escritorio",
+      "entrada": "1440 × 1080, tema claro",
+      "esperado": "24 filas, gráfica y página sin desplazamiento horizontal",
+      "obtenido": {
+        "contenido": 1440,
+        "ventana": 1440,
+        "evidencias": [
+          "simulacion-escritorio.png",
+          "simulacion-escritorio-inicio.png"
+        ]
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I24",
+      "nombre": "Tema oscuro",
+      "entrada": "Cambiar tema desde el selector",
+      "esperado": "Tema oscuro activo y métricas conservadas",
+      "obtenido": {
+        "tema": "dark",
+        "evidencia": "simulacion-oscuro.png"
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I25",
+      "nombre": "Interfaz móvil",
+      "entrada": "390 × 844",
+      "esperado": "Sin desbordamiento horizontal de la página; tablas con scroll propio",
+      "obtenido": {
+        "contenido": 390,
+        "ventana": 390,
+        "tabla": 910,
+        "contenedorTabla": 322,
+        "evidencia": "simulacion-movil.png"
+      },
+      "estado": "Aprobada"
+    },
+    {
+      "id": "I26",
+      "nombre": "Sin errores JavaScript ni consola",
+      "entrada": "Navegación y operaciones de las pruebas anteriores",
+      "esperado": "Cero errores",
+      "obtenido": {
+        "erroresJavaScript": 0,
+        "erroresConsola": 0
+      },
+      "estado": "Aprobada"
+    }
+  ],
+  "erroresJavaScript": [],
+  "erroresConsola": []
+}

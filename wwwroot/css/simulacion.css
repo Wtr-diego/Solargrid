@@ -1,0 +1,31 @@
+.sim-resumen{border-top:4px solid var(--acento)}
+.sim-cabecera{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:22px}
+.sim-cabecera h2,.sim-exportacion h2{margin:7px 0 5px;font-size:23px;letter-spacing:-.5px}
+.sim-cabecera p{margin:0;font-size:13px}.sim-estado{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sim-metricas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sim-metrica{padding:18px;background:var(--fondo);border:1px solid var(--borde);border-radius:12px;min-width:0}
+.sim-metrica-solar{background:var(--suave)}.sim-metrica>span{font-size:12px;font-weight:650;color:var(--muted)}
+.sim-metrica>strong{display:block;font-size:29px;margin:8px 0;font-variant-numeric:tabular-nums;letter-spacing:-.7px;overflow-wrap:anywhere}
+.sim-metrica strong small{font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted)}.sim-metrica p{font-size:11px;margin:0;color:var(--muted)}
+.sim-progreso{margin-top:22px}.sim-progreso label{display:block;font-size:12px;color:var(--muted);margin-bottom:8px}
+.sim-progreso progress{appearance:none;width:100%;height:8px;border:0;border-radius:20px;background:var(--borde);display:block;accent-color:var(--acento)}
+.sim-progreso progress::-webkit-progress-bar{background:var(--borde);border-radius:20px}.sim-progreso progress::-webkit-progress-value{background:var(--acento);border-radius:20px}.sim-progreso progress::-moz-progress-bar{background:var(--acento);border-radius:20px}
+.sim-aviso{font-size:12px;color:var(--muted);margin:15px 0 0}.sim-explicacion{max-width:370px}.sim-form-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.sim-form-grid label{display:block;margin-bottom:7px;font-weight:600;font-size:12px}.sim-form-grid select,.sim-form-grid input{width:100%;min-height:44px;margin:0}
+.sim-form-grid small{display:block;margin-top:7px;font-size:10px;color:var(--muted)}.sim-texto-ayuda{font-size:12px;color:var(--muted)}
+.sim-configuracion .acciones{align-items:center;margin-top:20px}.sim-configuracion .sim-texto-ayuda{max-width:460px}.sim-capacidad{font-size:13px;border:1px solid var(--borde);padding:8px 12px;border-radius:8px;white-space:nowrap}
+.sim-botones{gap:10px}.sim-botones .boton{min-width:135px}.sim-ubicacion{display:flex;flex-wrap:wrap;gap:10px 22px;padding-top:20px;margin-top:20px;border-top:1px solid var(--borde);font-size:12px;color:var(--muted)}
+.sim-ubicacion a{font-weight:600}.sim-grafica-contenedor{width:100%;overflow-x:auto}.sim-grafica svg{width:100%;min-width:500px;height:auto;display:block}
+.sim-leyenda{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;padding-top:12px}.sim-leyenda>span{display:flex;align-items:center;gap:7px}.sim-leyenda i{display:inline-block;width:18px;height:4px;border-radius:2px}
+.sim-color-solar{background:#148576}.sim-color-consumo{background:#cc7b17}.sim-cuadricula{stroke:var(--borde);stroke-width:1}.sim-eje{fill:var(--muted);font-size:11px;font-family:inherit}
+.sim-linea-solar,.sim-linea-consumo{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.sim-linea-solar{stroke:#148576}.sim-linea-consumo{stroke:#cc7b17;stroke-dasharray:7 5}.sim-punto-solar{fill:#148576}.sim-punto-consumo{fill:#cc7b17}
+[data-tema="dark"] .sim-color-solar{background:#8be4d3}[data-tema="dark"] .sim-linea-solar{stroke:#8be4d3}[data-tema="dark"] .sim-punto-solar{fill:#8be4d3}
+[data-tema="dark"] .sim-color-consumo{background:#f1ba6e}[data-tema="dark"] .sim-linea-consumo{stroke:#f1ba6e}[data-tema="dark"] .sim-punto-consumo{fill:#f1ba6e}
+.sim-exportacion .secundario{font-size:13px;max-width:800px}.sim-exportacion .acciones{margin-top:20px}.sim-tabla{max-height:510px;overflow:auto;border:1px solid var(--borde);border-radius:10px}
+.sim-tabla table{margin:0;width:100%}.sim-tabla th{position:sticky;top:0;background:var(--fondo);z-index:1;letter-spacing:0;font-size:10px}.sim-tabla td{white-space:nowrap;text-align:right;font-size:12px;padding:12px}.sim-tabla td:first-child{text-align:left;font-weight:650}
+.sim-metodo summary{font-size:15px;font-weight:650;cursor:pointer}.sim-metodo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:18px}.sim-metodo h3{font-size:14px}.sim-metodo p{font-size:12px;line-height:1.7;color:var(--muted)}
+[data-simulacion-pagina] [hidden],[data-simulacion] [hidden]{display:none!important}[data-simulacion-pagina] .boton:disabled,[data-simulacion-pagina] [aria-disabled="true"]{opacity:.48;cursor:not-allowed;transform:none;box-shadow:none}
+[data-simulacion-pagina] #sim-error{margin:16px 0 0}
+@media(max-width:1200px){.sim-form-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.sim-explicacion{max-width:290px}.sim-metodo-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.sim-cabecera{flex-direction:column;gap:14px}.sim-metricas{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sim-metrica{padding:14px}.sim-metrica>strong{font-size:25px}.sim-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sim-form-grid>div:first-child{grid-column:1/-1}.sim-botones .boton{flex:1;min-width:130px}.sim-explicacion{max-width:none}.sim-exportacion .acciones>.boton{width:100%;text-align:center}.sim-cabecera h2,.sim-exportacion h2{font-size:20px}}
+@media print{.sim-configuracion,.sim-controles,.sim-exportacion .acciones,.sim-estado .boton,.sim-aviso[data-sim="conexion"]{display:none!important}.sim-tabla{max-height:none;overflow:visible}.sim-metricas{grid-template-columns:repeat(3,minmax(0,1fr))}.sim-metrica{break-inside:avoid}.sim-grafica svg{min-width:0}.sim-tabla th{position:static}.sim-resumen,.sim-grafica{break-inside:avoid}.sim-metodo{display:none}}

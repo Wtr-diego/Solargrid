@@ -1,9 +1,11 @@
 @{
     var authenticated = User.Identity?.IsAuthenticated == true;
+    var pageTitle = ViewData["Title"]?.ToString()?.Trim();
+    var browserTitle = string.IsNullOrWhiteSpace(pageTitle) ? "SolarGrid" : $"SolarGrid · {pageTitle}";
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
     var manager = User.IsInRole("Administrador") || User.IsInRole("Tecnico");
     var links = new List<(string Controller, string Label, string Icon)> { ("Home", "Inicio", "home") };
-    if (manager) links.AddRange(new[] { ("Comunidades", "Comunidades", "community"), ("Sistemas", "Sistemas solares", "solar"), ("Equipos", "Equipos", "equipment"), ("Lecturas", "Lecturas", "energy"), ("Reportes", "Reportes", "report") });
+    if (manager) links.AddRange(new[] { ("Comunidades", "Comunidades", "community"), ("Sistemas", "Sistemas solares", "solar"), ("Equipos", "Equipos", "equipment"), ("Lecturas", "Lecturas", "energy"), ("Simulacion", "Simulación", "solar"), ("Reportes", "Reportes", "report") });
     if (User.IsInRole("Administrador")) links.Add(("Usuarios", "Usuarios", "community"));
     links.Add(("Incidencias", "Incidencias", "alert"));
 }
@@ -13,9 +15,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="~/js/tema.js" asp-append-version="true"></script>
-    <title>@ViewData["Title"] · SolarGrid</title>
+    <title>@browserTitle</title>
+    <link rel="icon" type="image/svg+xml" href="~/favicon.svg" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/interfaz.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="@(authenticated ? "con-sidebar" : "sin-sidebar")">
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>

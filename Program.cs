@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SolarGrid.Data;
 using SolarGrid.Models;
+using SolarGrid.Simulacion;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<SimuladorSolar>();
+builder.Services.AddHostedService(provider => provider.GetRequiredService<SimuladorSolar>());
 builder.Services.AddDbContext<SolarGridDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SolarGrid")));
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();

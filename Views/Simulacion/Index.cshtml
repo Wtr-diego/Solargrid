@@ -1,0 +1,45 @@
+@model SolarGrid.Simulacion.EstadoSimulacion
+@{ ViewData["Title"] = "Simulación solar"; }
+@section Styles { <link rel="stylesheet" href="~/css/simulacion.css" asp-append-version="true" /> }
+<div data-simulacion-pagina data-base-url="@Url.Action("Index", "Simulacion")" data-exportar-url="@Url.Action("Exportar", "Simulacion")" data-reportes-url="@Url.Action("Index", "Reportes")">
+    <div class="encabezado encabezado-panel"><div><span class="etiqueta">EXPLORA LA ENERGÍA EN EL SALVADOR</span><h1>Simulación solar</h1><p class="secundario">Un día de producción y consumo, listo para presentar a tu equipo.</p></div><span class="chip estado-aviso">Demostración</span></div>
+    <noscript><div class="mensaje error-mapa">Activa JavaScript para controlar la simulación y ver las lecturas actualizadas.</div></noscript>
+    <section class="tarjeta sim-configuracion" aria-labelledby="sim-config-titulo">
+        <div class="sim-cabecera"><div><span class="etiqueta">01 · DEFINE EL ESCENARIO</span><h2 id="sim-config-titulo">Tu instalación solar</h2></div><p class="secundario sim-explicacion">La fecha corresponde al día anterior en El Salvador. Cada 2 segundos representan una hora simulada.</p></div>
+        <form id="sim-config-form" action="@Url.Action("Configurar", "Simulacion")" method="post">
+            @Html.AntiForgeryToken()
+            <div class="sim-form-grid">
+                <div><label for="sim-ubicacion">Ubicación en El Salvador</label><select id="sim-ubicacion" name="Ubicacion"><option value="san-salvador">San Salvador</option><option value="santa-ana">Santa Ana</option><option value="san-miguel">San Miguel</option><option value="chalatenango">Chalatenango</option></select></div>
+                <div><label for="sim-clima">Escenario de cielo</label><select id="sim-clima" name="Clima"><option value="Soleado">Soleado</option><option value="Variable">Variable</option><option value="Nublado">Nublado</option></select></div>
+                <div><label for="sim-potencia">Potencia por panel (W)</label><input id="sim-potencia" name="PotenciaPanelW" type="number" min="100" max="1000" step="10" value="450" required /></div>
+                <div><label for="sim-paneles">Cantidad de paneles</label><input id="sim-paneles" name="CantidadPaneles" type="number" min="1" max="24" step="1" value="1" required /></div>
+                <div><label for="sim-consumo">Factor de consumo</label><input id="sim-consumo" name="FactorConsumo" type="number" min="0.25" max="3" step="0.05" value="1" required /><small>1 = demanda de referencia; 2 = doble.</small></div>
+            </div>
+            <div class="acciones"><button class="boton boton-contorno" type="submit" data-configurar>Aplicar escenario y reiniciar</button><span class="secundario sim-texto-ayuda">Reinicia las lecturas de esta demostración. Los registros ya guardados se conservan.</span></div>
+        </form>
+    </section>
+    <partial name="_ResumenSimulacion" />
+    <section class="tarjeta sim-controles" aria-labelledby="sim-control-titulo">
+        <div class="sim-cabecera"><div><span class="etiqueta">02 · EJECUTA Y OBSERVA</span><h2 id="sim-control-titulo">Control de la demostración</h2></div><span class="sim-capacidad"><strong data-sim="potenciaInstaladaW">450</strong> W instalados</span></div>
+        <div class="acciones sim-botones"><button type="button" class="boton boton-primario" data-accion="Iniciar">Iniciar</button><button type="button" class="boton boton-contorno" data-accion="Pausar">Pausar</button><button type="button" class="boton boton-contorno" data-accion="Avanzar">Avanzar 1 hora</button><button type="button" class="boton boton-contorno" data-accion="Completar">Completar el día</button></div>
+        <p class="sim-aviso" id="sim-resultado" role="status" aria-live="polite">La simulación es compartida por los administradores y técnicos de esta aplicación.</p>
+        <div class="mensaje error-mapa" id="sim-error" role="alert" hidden></div>
+        <div class="sim-ubicacion"><span>Ubicación aproximada: <strong data-sim="coordenadas">—</strong></span><a data-sim-mapa target="_blank" rel="noopener noreferrer" hidden>Ver ubicación en el mapa ↗</a><span>Hora local simulada: UTC−6.</span></div>
+    </section>
+    <section class="tarjeta sim-grafica" aria-labelledby="sim-grafica-titulo">
+        <div class="sim-cabecera"><div><span class="etiqueta">UN DÍA, HORA A HORA</span><h2 id="sim-grafica-titulo">Generación frente a consumo</h2><p class="secundario">Energía de cada intervalo de una hora, en kWh.</p></div><div class="sim-leyenda"><span><i class="sim-color-solar"></i>Generación</span><span><i class="sim-color-consumo"></i>Consumo</span></div></div>
+        <div class="sim-grafica-contenedor"><svg id="sim-grafico" viewBox="0 0 800 280" role="img" aria-label="Gráfica de generación solar y consumo por hora. Los valores también están en la tabla de lecturas."></svg></div>
+        <p class="sim-texto-ayuda" data-sim-grafica-vacia>Inicia la simulación o avanza una hora para ver los primeros datos.</p>
+    </section>
+    <section class="tarjeta sim-exportacion" aria-labelledby="sim-guardar-titulo">
+        <div><span class="etiqueta">03 · GUARDA Y PRESENTA</span><h2 id="sim-guardar-titulo">Lleva los resultados al proyecto</h2><p class="secundario">Al completar el día puedes guardar las 24 lecturas en la base de datos. Aparecerán en Lecturas, Reportes y el panel principal, bajo un sistema identificado con [SIM].</p></div>
+        <div class="acciones"><button type="button" class="boton boton-primario" data-accion="Guardar">Guardar 24 lecturas</button><a class="boton boton-contorno" data-sim-csv href="@Url.Action("Exportar", "Simulacion")">Descargar CSV</a><a class="boton boton-contorno" data-sim-reporte hidden>Ver reporte guardado</a></div>
+        <p class="sim-aviso" data-sim="guardado" role="status">Aún no se han guardado lecturas de esta simulación.</p>
+    </section>
+    <section class="tarjeta" aria-labelledby="sim-tabla-titulo">
+        <div class="sim-cabecera"><div><span class="etiqueta">EVIDENCIA DE LA SIMULACIÓN</span><h2 id="sim-tabla-titulo">Detalle de las lecturas</h2></div><span class="secundario">La hora indica el inicio del intervalo.</span></div>
+        <div class="tabla-scroll sim-tabla"><table><caption class="solo-lectores">Lecturas horarias simuladas de energía y condiciones ambientales.</caption><thead><tr><th scope="col">Hora</th><th scope="col">Irradiancia<br />W/m²</th><th scope="col">Ambiente<br />°C</th><th scope="col">Panel<br />°C</th><th scope="col">Potencia solar<br />W</th><th scope="col">Demanda<br />W</th><th scope="col">Generación<br />kWh</th><th scope="col">Consumo<br />kWh</th><th scope="col">Solar consumida<br />kWh</th><th scope="col">Red<br />kWh</th><th scope="col">Excedente<br />kWh</th></tr></thead><tbody id="sim-lecturas"><tr><td colspan="11">Aún no hay lecturas. Inicia la demostración.</td></tr></tbody></table></div>
+    </section>
+    <details class="tarjeta sim-metodo"><summary>Cómo interpretar esta simulación</summary><div class="sim-metodo-grid"><div><h3>Un modelo didáctico</h3><p>El simulador estima la irradiancia, la temperatura y la demanda mediante un perfil diario. El clima se selecciona manualmente y las ubicaciones son referencias aproximadas; no utiliza pronósticos ni sensores reales.</p><p>La generación cambia con el cielo, la potencia instalada y la temperatura del panel. Durante la noche la generación es cero. No se modelan baterías.</p></div><div><h3>El balance de energía</h3><p><strong>Consumo total = solar consumida + energía de la red.</strong><br /><strong>Generación = solar consumida + excedente.</strong></p><p>Un excedente indica energía disponible sin consumir. No equivale a una venta o compensación económica. Las energías se redondean a dos decimales para coincidir con los registros del proyecto.</p></div><div><h3>Para presentar al equipo</h3><p>Elige una ubicación, aplica el escenario e inicia. Explica la gráfica y la cobertura solar; luego completa el día, guarda las lecturas y abre el reporte. Puedes descargar un CSV como evidencia.</p><p>La ejecución activa se mantiene en memoria y se reinicia al detener el servidor. Las lecturas guardadas permanecen en la base de datos.</p></div></div></details>
+</div>
+@section Scripts { <script src="~/js/simulacion.js" asp-append-version="true" defer></script> }
