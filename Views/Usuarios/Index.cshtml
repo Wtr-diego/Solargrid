@@ -1,11 +1,19 @@
 @model List<Usuario>
-@{ ViewData["Title"] = "Usuarios"; }
+@{
+    ViewData["Title"] = "Usuarios";
+    var grupos = new[]
+    {
+        (Rol: "Administrador", Titulo: "Administradores", Id: "administradores", Descripcion: "Cuentas con acceso a la administración de usuarios."),
+        (Rol: "Tecnico", Titulo: "Técnicos", Id: "tecnicos", Descripcion: "Cuentas para la gestión técnica de los sistemas solares."),
+        (Rol: "Comunidad", Titulo: "Usuarios de comunidad", Id: "comunidad", Descripcion: "Cuentas vinculadas a las comunidades registradas.")
+    };
+}
 
 <div class="encabezado">
     <div>
         <span class="etiqueta">ADMINISTRACIÓN</span>
         <h1>Usuarios</h1>
-        <p class="secundario">Administra las cuentas, sus roles y su acceso a SolarGrid.</p>
+        <p class="secundario">Administra las cuentas organizadas por su rol y su acceso a SolarGrid.</p>
     </div>
     <div class="acciones">
         <a class="boton boton-contorno" asp-action="Historial">Ver historial</a>
@@ -13,24 +21,33 @@
     </div>
 </div>
 
-<section class="tarjeta tabla-scroll">
-    @if (Model.Count == 0)
-    {
-        <p class="secundario">No hay usuarios registrados.</p>
-    }
-    else
-    {
+@foreach (var grupo in grupos)
+{
+    var usuarios = Model.Where(u => u.Rol == grupo.Rol).ToList();
+    <section class="tarjeta usuarios-grupo" aria-labelledby="titulo-@grupo.Id" data-rol="@grupo.Rol">
+        <div class="titulo-tabla">
+            <div>
+                <h2 id="titulo-@grupo.Id">@grupo.Titulo</h2>
+                <p class="secundario">@grupo.Descripcion</p>
+            </div>
+            <span class="chip estado-neutral">@usuarios.Count @(usuarios.Count == 1 ? "cuenta" : "cuentas")</span>
+        </div>
+        <div class="tabla-scroll">
         <table>
+            <caption class="solo-lectores">Cuentas de @grupo.Titulo.ToLowerInvariant()</caption>
             <thead>
-                <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Comunidad</th><th>Estado</th><th>Acciones</th></tr>
+                <tr><th scope="col">Nombre</th><th scope="col">Correo</th><th scope="col">Comunidad</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr>
             </thead>
             <tbody>
-                @foreach (var usuario in Model)
+                @if (usuarios.Count == 0)
+                {
+                    <tr><td colspan="5" class="usuarios-vacio">No hay cuentas registradas con este rol.</td></tr>
+                }
+                @foreach (var usuario in usuarios)
                 {
                     <tr>
                         <td><strong>@usuario.Nombre</strong></td>
                         <td>@usuario.Correo</td>
-                        <td>@(usuario.Rol == "Tecnico" ? "Técnico" : usuario.Rol)</td>
                         <td>@(usuario.Comunidad?.Nombre ?? "Sin comunidad")</td>
                         <td><span class="chip @(usuario.Activo ? "" : "chip-pendiente")">@(usuario.Activo ? "Activo" : "Inactivo")</span></td>
                         <td><a asp-action="Editar" asp-route-id="@usuario.IdUsuario">Editar</a></td>
@@ -38,5 +55,6 @@
                 }
             </tbody>
         </table>
-    }
-</section>
+        </div>
+    </section>
+}

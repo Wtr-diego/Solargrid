@@ -1,0 +1,21 @@
+# Solo se envian al constructor los archivos necesarios para ejecutar la app.
+# PUBLICACION contiene configuracion privada: nunca debe entrar en la imagen.
+**
+!Dockerfile
+!SolarGrid.csproj
+!appsettings.json
+!Program.cs
+!Controllers/
+!Controllers/**
+!Data/
+!Data/**
+!Models/
+!Models/**
+!ViewModels/
+!ViewModels/**
+!Views/
+!Views/**
+!wwwroot/
+!wwwroot/**
+!simulación/
+!simulación/*.cs

@@ -3,11 +3,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DefaultItemExcludes>$(DefaultItemExcludes);PUBLICACION/**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="simulación/pruebas/**/*.cs" />
     <Content Remove="simulación/pruebas/**" />
     <None Remove="simulación/pruebas/**" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.Development*.json;appsettings.Local.json;DOCUMENTACION/**;simulación/**;SQL/**" CopyToPublishDirectory="Never" />
+    <None Update="DOCUMENTACION/**;simulación/**;SQL/**" CopyToPublishDirectory="Never" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,10 @@ Aplicación web académica para gestionar sistemas de energía solar comunitario
 ## Funcionalidades
 
 - Inicio y cierre de sesión con roles Administrador, Técnico y Comunidad.
+- Botón Mostrar/Ocultar contraseña al iniciar sesión y crear usuarios.
 - Gestión de usuarios desde el menú **Usuarios** del administrador: alta, edición, asignación de rol y comunidad, desactivación y reactivación.
+- Usuarios organizados en tres tablas por rol: administradores, técnicos y usuarios de comunidad.
+- Menú desplegable **Espacio de trabajo** con las opciones disponibles según el rol.
 - Historial de usuarios con la fecha, el administrador responsable, la cuenta afectada y los campos que cambiaron.
 - Registro, consulta y edición de comunidades y equipos.
 - Registro y consulta de sistemas solares asociados con comunidades.
@@ -41,6 +44,12 @@ En modo Development, el proyecto crea una base nueva y datos ficticios si no exi
 | Comunidad | `vecino@solargrid.local` |
 
 La contraseña de estas cuentas ficticias es `DemoSolar2026!`, definida en `Data/DatosIniciales.cs`. Son datos públicos de demostración: no usar estas cuentas en un despliegue real. Publicar el código en GitHub no despliega la aplicación.
+
+## Publicar en Render
+
+El repositorio incluye `Dockerfile`, `.dockerignore` y `render.yaml` para crear un servicio **Free** desde **New → Blueprint** en Render. Se reutiliza la base SQL Server de Somee mediante la variable privada `ConnectionStrings__SolarGrid`; no se incluyen contraseñas en la imagen ni en GitHub.
+
+Consultar la [guía de publicación en Render](GUIA_RENDER.md) para configurar el servicio y verificarlo. En el plan gratuito el servicio se suspende tras 15 minutos sin visitas: se pierde la simulación en memoria al reiniciarse, pero las lecturas guardadas permanecen en la base externa. La preparación del repositorio no implica que el sitio ya esté desplegado.
 
 ## Organización
 

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: solargrid
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /Cuenta/Ingresar
+    autoDeployTrigger: commit
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_HTTP_PORTS
+        value: "10000"
+      - key: PORT
+        value: "10000"
+      # Solo detras del proxy de Render, que termina HTTPS antes del contenedor.
+      - key: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+        value: "true"
+      - key: ConnectionStrings__SolarGrid
+        sync: false

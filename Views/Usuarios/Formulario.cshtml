@@ -48,7 +48,10 @@
         else
         {
             <label asp-for="Contrasena">Contraseña inicial</label>
-            <input asp-for="Contrasena" autocomplete="new-password" required minlength="8" maxlength="128" />
+            <div class="campo-contrasena">
+                <input asp-for="Contrasena" type="password" autocomplete="new-password" required minlength="8" maxlength="128" />
+                <partial name="_MostrarContrasena" model='@("Contrasena")' />
+            </div>
             <span asp-validation-for="Contrasena" class="errores"></span>
         }
 

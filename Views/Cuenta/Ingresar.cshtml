@@ -13,7 +13,10 @@
             <input asp-for="Correo" type="email" autocomplete="username" placeholder="usuario@solargrid.local" />
             <span asp-validation-for="Correo" class="errores"></span>
             <label asp-for="Contrasena">Contraseña</label>
-            <input asp-for="Contrasena" type="password" autocomplete="current-password" />
+            <div class="campo-contrasena">
+                <input asp-for="Contrasena" type="password" autocomplete="current-password" />
+                <partial name="_MostrarContrasena" model='@("Contrasena")' />
+            </div>
             <span asp-validation-for="Contrasena" class="errores"></span>
             <button class="boton boton-primario ancho" type="submit">Entrar al sistema</button>
         </form>
