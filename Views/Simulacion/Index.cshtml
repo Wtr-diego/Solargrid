@@ -9,7 +9,12 @@
         <form id="sim-config-form" action="@Url.Action("Configurar", "Simulacion")" method="post">
             @Html.AntiForgeryToken()
             <div class="sim-form-grid">
-                <div><label for="sim-ubicacion">Ubicación en El Salvador</label><select id="sim-ubicacion" name="Ubicacion"><option value="san-salvador">San Salvador</option><option value="santa-ana">Santa Ana</option><option value="san-miguel">San Miguel</option><option value="chalatenango">Chalatenango</option></select></div>
+                <div><label for="sim-ubicacion">Departamento de El Salvador</label><select id="sim-ubicacion" name="Ubicacion">
+                    @foreach (var lugar in SolarGrid.Simulacion.LugaresSimulacion.Todos.OrderBy(l => l.Nombre))
+                    {
+                        <option value="@lugar.Id" selected="@(lugar.Id == Model.Configuracion.Ubicacion)">@lugar.Nombre</option>
+                    }
+                </select><small class="secundario">Ubicación aproximada de la cabecera departamental.</small></div>
                 <div><label for="sim-clima">Escenario de cielo</label><select id="sim-clima" name="Clima"><option value="Soleado">Soleado</option><option value="Variable">Variable</option><option value="Nublado">Nublado</option></select></div>
                 <div><label for="sim-potencia">Potencia por panel (W)</label><input id="sim-potencia" name="PotenciaPanelW" type="number" min="100" max="1000" step="10" value="450" required /></div>
                 <div><label for="sim-paneles">Cantidad de paneles</label><input id="sim-paneles" name="CantidadPaneles" type="number" min="1" max="24" step="1" value="1" required /></div>

@@ -41,7 +41,18 @@ public static class LugaresSimulacion
         new LugarSimulacion("san-salvador", "San Salvador", 13.6929, -89.2182, 27),
         new LugarSimulacion("santa-ana", "Santa Ana", 13.9942, -89.5597, 26),
         new LugarSimulacion("san-miguel", "San Miguel", 13.4833, -88.1833, 30),
-        new LugarSimulacion("chalatenango", "Chalatenango", 14.0333, -88.9333, 28)
+        new LugarSimulacion("chalatenango", "Chalatenango", 14.0333, -88.9333, 28),
+        // Referencias aproximadas de las cabeceras; temperaturas ilustrativas del modelo.
+        new LugarSimulacion("ahuachapan", "Ahuachapán", 13.9214, -89.8450, 27),
+        new LugarSimulacion("sonsonate", "Sonsonate", 13.7189, -89.7242, 29),
+        new LugarSimulacion("la-libertad", "La Libertad", 13.6769, -89.2797, 26),
+        new LugarSimulacion("cuscatlan", "Cuscatlán", 13.7167, -88.9333, 28),
+        new LugarSimulacion("la-paz", "La Paz", 13.5000, -88.8667, 29),
+        new LugarSimulacion("cabanas", "Cabañas", 13.8667, -88.6333, 27),
+        new LugarSimulacion("san-vicente", "San Vicente", 13.6333, -88.8000, 28),
+        new LugarSimulacion("usulutan", "Usulután", 13.3500, -88.4500, 30),
+        new LugarSimulacion("morazan", "Morazán", 13.7667, -88.1000, 27),
+        new LugarSimulacion("la-union", "La Unión", 13.3333, -87.8500, 30)
     });
 
     public static LugarSimulacion Obtener(string id) => Todos.FirstOrDefault(l => l.Id == id)

@@ -71,7 +71,7 @@ La base contempla nueve tablas: Comunidades, Usuarios, SistemasSolares, Equipos,
 ## Presentar la simulación
 
 1. Iniciar sesión como **Administrador** o **Técnico** y abrir **Simulación**.
-2. Elegir San Salvador, Santa Ana, San Miguel o Chalatenango; seleccionar clima soleado, variable o nublado, potencia y cantidad de paneles, y factor de consumo.
+2. Elegir uno de los 14 departamentos de El Salvador; seleccionar clima soleado, variable o nublado, potencia y cantidad de paneles, y factor de consumo.
 3. Pulsar **Aplicar escenario y reiniciar**, y después **Iniciar**. Cada dos segundos representan una hora: un día completo tarda aproximadamente 48 segundos.
 4. Usar **Pausar**, **Continuar**, **Avanzar 1 hora** o **Completar el día** según el ritmo de la presentación.
 5. Abrir **Inicio** en otra pestaña para observar cómo se actualizan los indicadores automáticamente.
