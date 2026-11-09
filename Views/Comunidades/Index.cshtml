@@ -105,6 +105,8 @@
                         @if (User.IsInRole("Administrador"))
                         {
                             <a asp-action="Editar" asp-route-id="@c.IdComunidad">Editar</a>
+                            <span aria-hidden="true"> · </span>
+                            <a asp-action="Eliminar" asp-route-id="@c.IdComunidad">Eliminar</a>
                         }
                     </td>
                 </tr>

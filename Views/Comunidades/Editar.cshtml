@@ -7,6 +7,6 @@
         <label asp-for="Nombre">Nombre de la comunidad</label><input asp-for="Nombre" /><span asp-validation-for="Nombre" class="errores"></span>
         <label asp-for="Ubicacion">Ubicación</label><input asp-for="Ubicacion" /><span asp-validation-for="Ubicacion" class="errores"></span>
         <label asp-for="Estado">Estado</label><select asp-for="Estado"><option value="Activa">Activa</option><option value="Inactiva">Inactiva</option></select><span asp-validation-for="Estado" class="errores"></span>
-        <div class="acciones"><button class="boton boton-primario" type="submit">Guardar cambios</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a></div>
+        <div class="acciones"><button class="boton boton-primario" type="submit">Guardar cambios</button><a class="boton boton-contorno" asp-action="Index">Cancelar</a><a class="boton boton-peligro" asp-action="Eliminar" asp-route-id="@ViewBag.IdComunidad">Eliminar comunidad</a></div>
     </form>
 </section>

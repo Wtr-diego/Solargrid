@@ -11,6 +11,7 @@ Aplicación web académica para gestionar sistemas de energía solar comunitario
 - Menú lateral **Espacio de trabajo** con las opciones visibles según el rol.
 - Historial de usuarios con la fecha, el administrador responsable, la cuenta afectada y los campos que cambiaron.
 - Registro, consulta y edición de comunidades y equipos.
+- Eliminación de comunidades por administradores, con confirmación y protección de comunidades que tienen sistemas o usuarios asociados.
 - Registro y consulta de sistemas solares asociados con comunidades.
 - Registro manual de generación y consumo de energía.
 - Simulación solar en El Salvador: escenarios de clima, generación y consumo por hora, resumen automático en Inicio, exportación CSV y guardado de lecturas identificadas con `[SIM]`.

@@ -107,6 +107,51 @@ public class ComunidadesController(SolarGridDbContext db, ILogger<ComunidadesCon
         return RedirectToAction(nameof(Index));
     }
 
+    private Task<EliminarComunidadVm?> ObtenerComunidadParaEliminar(int id) =>
+        db.Comunidades.AsNoTracking().Where(c => c.IdComunidad == id)
+            .Select(c => new EliminarComunidadVm
+            {
+                IdComunidad = c.IdComunidad,
+                Nombre = c.Nombre,
+                Ubicacion = c.Ubicacion,
+                SistemasAsociados = db.SistemasSolares.Count(s => s.IdComunidad == c.IdComunidad),
+                UsuariosAsociados = db.Usuarios.Count(u => u.IdComunidad == c.IdComunidad)
+            }).SingleOrDefaultAsync();
+
+    [Authorize(Roles = "Administrador"), HttpGet]
+    public async Task<IActionResult> Eliminar(int id)
+    {
+        var vm = await ObtenerComunidadParaEliminar(id);
+        return vm == null ? NotFound() : View(vm);
+    }
+
+    [Authorize(Roles = "Administrador"), HttpPost, ActionName("Eliminar"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> EliminarConfirmado(int id)
+    {
+        var vm = await ObtenerComunidadParaEliminar(id);
+        if (vm == null) return NotFound();
+        if (!vm.PuedeEliminar)
+        {
+            ModelState.AddModelError("", "No se puede eliminar una comunidad con sistemas o usuarios asociados. Reasígnalos primero o marca la comunidad como inactiva.");
+            return View("Eliminar", vm);
+        }
+
+        db.Comunidades.Remove(new Comunidad { IdComunidad = id });
+        try { await db.SaveChangesAsync(); }
+        catch (DbUpdateConcurrencyException) { return NotFound(); }
+        catch (DbUpdateException ex)
+        {
+            logger.LogError(ex, "Error al eliminar la comunidad {IdComunidad}", id);
+            // Las claves foráneas también protegen frente a asociaciones creadas durante la confirmación.
+            var actual = await ObtenerComunidadParaEliminar(id);
+            if (actual == null) return NotFound();
+            ModelState.AddModelError("", "No se pudo eliminar la comunidad. Revisa si tiene nuevos registros asociados e inténtalo de nuevo.");
+            return View("Eliminar", actual);
+        }
+        TempData["Exito"] = $"Comunidad {vm.Nombre} eliminada correctamente.";
+        return RedirectToAction(nameof(Index));
+    }
+
     [Authorize(Roles = "Administrador"), HttpGet]
     public IActionResult Crear() => View(new ComunidadVm());
 

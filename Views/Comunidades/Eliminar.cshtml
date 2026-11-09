@@ -1,0 +1,26 @@
+@model EliminarComunidadVm
+@{ ViewData["Title"] = "Eliminar comunidad"; }
+<section class="tarjeta formulario">
+    <h1>Eliminar comunidad</h1>
+    <p><strong>@Model.Nombre</strong><br />@Model.Ubicacion</p>
+    <div asp-validation-summary="ModelOnly" class="errores" role="alert"></div>
+    @if (Model.PuedeEliminar)
+    {
+        <p>¿Quieres eliminar esta comunidad? Esta acción no se puede deshacer.</p>
+        <form asp-action="Eliminar" asp-route-id="@Model.IdComunidad" method="post">
+            <div class="acciones">
+                <button type="submit" class="boton boton-peligro">Sí, eliminar comunidad</button>
+                <a class="boton boton-contorno" asp-action="Editar" asp-route-id="@Model.IdComunidad">Cancelar</a>
+            </div>
+        </form>
+    }
+    else
+    {
+        <p>No se puede eliminar porque tiene <strong>@Model.SistemasAsociados sistemas</strong> y <strong>@Model.UsuariosAsociados usuarios</strong> asociados.</p>
+        <p>Primero reasigna los registros a otra comunidad. También puedes cambiar su estado a <strong>Inactiva</strong>.</p>
+        <div class="acciones">
+            <a class="boton boton-primario" asp-action="Editar" asp-route-id="@Model.IdComunidad">Volver a editar</a>
+            <a class="boton boton-contorno" asp-action="Index">Ver comunidades</a>
+        </div>
+    }
+</section>
