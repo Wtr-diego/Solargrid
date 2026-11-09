@@ -42,7 +42,7 @@ La variable de conexión usa **dos guiones bajos**. No colocar credenciales en G
 
 - Abrir el login por HTTPS: debe cargar con estilos y el botón Mostrar/Ocultar contraseña.
 - Iniciar sesión con la cuenta existente: esta prueba confirma la conexión real a SQL Server. El chequeo automático de Render solo verifica que la pantalla de acceso responda; no consulta la base.
-- Abrir **Espacio de trabajo** y comprobar que se desplieguen los enlaces.
+- Comprobar que los enlaces de **Espacio de trabajo** estén visibles en el menú lateral; en móvil, abrir primero el menú de navegación.
 - Como administrador, abrir **Usuarios**: deben aparecer las tablas Administradores, Técnicos y Usuarios de comunidad.
 - Abrir Simulación, completar un día y comprobar los indicadores de Inicio. Guardar las lecturas únicamente cuando se quieran conservar en la base compartida.
 

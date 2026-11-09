@@ -52,12 +52,8 @@
     {
         <aside class="sidebar" id="menu-principal">
             <a class="marca sidebar-marca" asp-controller="Home" asp-action="Index"><span class="marca-icono"><partial name="_Icono" model='@("solar")' /></span>SolarGrid</a>
-            <details class="espacio-trabajo" id="espacio-trabajo">
-                <summary>
-                    <span>Espacio de trabajo</span>
-                    <svg class="flecha-desplegable" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-                </summary>
-                <nav aria-label="Espacio de trabajo">
+            <p class="nav-etiqueta">ESPACIO DE TRABAJO</p>
+            <nav aria-label="Principal">
                 @foreach (var link in links)
                 {
                     var active = currentController == link.Controller;
@@ -65,8 +61,7 @@
                         <partial name="_Icono" model="@link.Icon" /><span>@link.Label</span>
                     </a>
                 }
-                </nav>
-            </details>
+            </nav>
             <div class="sidebar-nota"><partial name="_Icono" model='@("energy")' /><strong>Energía que conecta</strong><span>Gestión solar para tu comunidad.</span></div>
         </aside>
     }

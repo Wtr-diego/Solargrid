@@ -8,7 +8,7 @@ Aplicación web académica para gestionar sistemas de energía solar comunitario
 - Botón Mostrar/Ocultar contraseña al iniciar sesión y crear usuarios.
 - Gestión de usuarios desde el menú **Usuarios** del administrador: alta, edición, asignación de rol y comunidad, desactivación y reactivación.
 - Usuarios organizados en tres tablas por rol: administradores, técnicos y usuarios de comunidad.
-- Menú desplegable **Espacio de trabajo** con las opciones disponibles según el rol.
+- Menú lateral **Espacio de trabajo** con las opciones visibles según el rol.
 - Historial de usuarios con la fecha, el administrador responsable, la cuenta afectada y los campos que cambiaron.
 - Registro, consulta y edición de comunidades y equipos.
 - Registro y consulta de sistemas solares asociados con comunidades.

@@ -14,11 +14,7 @@
     });
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape') return;
-        const workspace = document.getElementById('espacio-trabajo');
-        if (workspace?.open && workspace.contains(document.activeElement)) {
-            workspace.open = false;
-            workspace.querySelector('summary').focus();
-        } else if (document.body.classList.contains('menu-abierto')) { close(); button.focus(); }
+        if (document.body.classList.contains('menu-abierto')) { close(); button.focus(); }
     });
     document.addEventListener('click', event => {
         if (!menu.contains(event.target) && !button.contains(event.target)) close();
