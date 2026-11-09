@@ -51,13 +51,15 @@
             <p class="secundario paso-mapa">1. Escoge un panel de los que ya registraste.<br />2. Marca su ubicación en el mapa.<br />3. Pulsa «Guardar ubicación».</p>
             <form asp-action="UbicarPanel" method="post" id="formUbicarPanel">
                 <label for="panelSeleccionado">Panel solar</label>
-                <select id="panelSeleccionado" name="idEquipo" required>
+                <select id="panelSeleccionado" name="idEquipo" aria-describedby="ayudaPanelUbicado" required>
                     <option value="">Selecciona un panel</option>
                     @foreach (var panel in Model.Paneles)
                     {
-                        <option value="@panel.IdEquipo" data-comunidad="@panel.IdComunidad">@panel.Codigo — @panel.Comunidad</option>
+                        var ubicado = panel.Latitud.HasValue && panel.Longitud.HasValue;
+                        <option value="@panel.IdEquipo" data-comunidad="@panel.IdComunidad">@(ubicado ? "✓ " : "")@panel.Codigo — @panel.Comunidad — @(ubicado ? "Ubicado" : "Sin ubicación")</option>
                     }
                 </select>
+                <p id="ayudaPanelUbicado" class="nota">✓ indica que el panel ya tiene una ubicación guardada.</p>
                 <input type="hidden" id="latitudPanel" name="latitud" />
                 <input type="hidden" id="longitudPanel" name="longitud" />
                 <p id="estadoSeleccion" class="mensaje-seleccion" role="status">Selecciona un panel para comenzar.</p>
