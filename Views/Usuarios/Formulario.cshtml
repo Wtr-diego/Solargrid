@@ -44,6 +44,13 @@
             </select>
             <small id="ayuda-estado" class="secundario">Una cuenta inactiva pierde el acceso a SolarGrid.</small>
             <span asp-validation-for="Activo" class="errores"></span>
+            <label asp-for="Contrasena">Nueva contraseña (opcional)</label>
+            <div class="campo-contrasena">
+                <input asp-for="Contrasena" type="password" autocomplete="new-password" minlength="8" maxlength="128" />
+                <partial name="_MostrarContrasena" model='@("Contrasena")' />
+            </div>
+            <small class="secundario">Deja el campo vacío para conservar la contraseña actual.</small>
+            <span asp-validation-for="Contrasena" class="errores"></span>
         }
         else
         {

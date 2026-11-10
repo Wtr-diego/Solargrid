@@ -78,6 +78,10 @@
     </main>
     <footer class="pie">SolarGrid · Todos los derechos reservados · 2026</footer>
     <script src="~/js/interfaz.js" asp-append-version="true" defer></script>
+    @if (authenticated)
+    {
+        <script src="~/js/presencia.js" asp-append-version="true" data-url-latido="@Url.Action("Presencia", "Cuenta")" defer></script>
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

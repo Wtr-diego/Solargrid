@@ -21,6 +21,14 @@ public class UsuariosController(
     private int IdAdministrador => int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
     [HttpGet]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    public async Task<IActionResult> Presencia([FromServices] PresenciaUsuarios presencia)
+    {
+        var activos = await db.Usuarios.Where(u => u.Activo).Select(u => u.IdUsuario).ToListAsync();
+        return Json(activos.Where(presencia.EnLinea).ToArray());
+    }
+
+    [HttpGet]
     public async Task<IActionResult> Index() => View(await db.Usuarios.AsNoTracking()
         .Include(u => u.Comunidad)
         .OrderBy(u => u.Nombre).ThenBy(u => u.Correo)
@@ -117,6 +125,9 @@ public class UsuariosController(
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Editar(int id, UsuarioVm vm)
     {
+        if (vm.Contrasena != null && string.IsNullOrWhiteSpace(vm.Contrasena))
+            ModelState.AddModelError(nameof(vm.Contrasena), "Escribe una contraseña válida o deja el campo vacío.");
+
         if (vm.Activo is null)
             ModelState.AddModelError(nameof(vm.Activo), "Selecciona el estado de la cuenta.");
 
@@ -147,6 +158,11 @@ public class UsuariosController(
             if (usuario.Correo != correo) cambios.Add("Correo");
             if (usuario.Rol != vm.Rol) cambios.Add($"Rol de {MostrarRol(usuario.Rol)} a {MostrarRol(vm.Rol)}");
             if (usuario.IdComunidad != vm.IdComunidad) cambios.Add("Comunidad asignada");
+            if (vm.Contrasena is { Length: > 0 } contrasena)
+            {
+                usuario.PasswordHash = hasher.HashPassword(usuario, contrasena);
+                cambios.Add("Restablecimiento de contraseña");
+            }
 
             var accion = "Edición";
             if (usuario.Activo != activo)

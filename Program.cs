@@ -10,6 +10,8 @@ using SolarGrid.Simulacion;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<PresenciaUsuarios>();
 builder.Services.AddSingleton<SimuladorSolar>();
 builder.Services.AddHostedService(provider => provider.GetRequiredService<SimuladorSolar>());
 builder.Services.AddDbContext<SolarGridDbContext>(options =>
@@ -33,10 +35,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 var db = context.HttpContext.RequestServices.GetRequiredService<SolarGridDbContext>();
                 var usuario = await db.Usuarios
                     .Where(u => u.IdUsuario == id && u.Activo)
-                    .Select(u => new { u.Nombre, u.Rol })
+                    .Select(u => new { u.Nombre, u.Rol, u.PasswordHash })
                     .SingleOrDefaultAsync(context.HttpContext.RequestAborted);
 
-                if (usuario != null && principal.IsInRole(usuario.Rol))
+                if (usuario != null && principal.IsInRole(usuario.Rol)
+                    && principal.FindFirstValue(SelloSesion.Claim) == SelloSesion.Calcular(usuario.PasswordHash))
                 {
                     if (principal.Identity is ClaimsIdentity identity &&
                         identity.FindFirst(ClaimTypes.Name) is Claim nombre && nombre.Value != usuario.Nombre)
@@ -48,6 +51,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                         context.ShouldRenew = true;
                     }
 
+                    context.HttpContext.RequestServices.GetRequiredService<PresenciaUsuarios>().Registrar(id);
                     return;
                 }
             }

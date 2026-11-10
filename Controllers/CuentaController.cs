@@ -41,7 +41,8 @@ public class CuentaController(SolarGridDbContext db, IPasswordHasher<Usuario> ha
         {
             new(ClaimTypes.NameIdentifier, usuario!.IdUsuario.ToString()),
             new(ClaimTypes.Name, usuario.Nombre),
-            new(ClaimTypes.Role, usuario.Rol)
+            new(ClaimTypes.Role, usuario.Rol),
+            new(SelloSesion.Claim, SelloSesion.Calcular(usuario.PasswordHash))
         };
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
@@ -58,4 +59,11 @@ public class CuentaController(SolarGridDbContext db, IPasswordHasher<Usuario> ha
 
     [AllowAnonymous]
     public IActionResult SinPermiso() => View();
+
+    [AllowAnonymous, HttpGet]
+    public IActionResult OlvideContrasena() => View();
+
+    [Authorize, HttpGet]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    public IActionResult Presencia() => NoContent();
 }
