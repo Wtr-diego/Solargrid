@@ -1,0 +1,30 @@
+@model ConfirmarEliminacionVm
+@{ ViewData["Title"] = $"Eliminar {Model.Tipo}"; }
+
+<section class="tarjeta formulario">
+    <h1>@ViewData["Title"]</h1>
+    <p><strong>@Model.Nombre</strong></p>
+    @if (Model.MotivoBloqueo is string motivo)
+    {
+        <p class="errores">@motivo</p>
+        <a class="boton boton-contorno" asp-action="Index">Volver al listado</a>
+    }
+    else
+    {
+        <p>Esta acción es permanente. ¿Deseas continuar?</p>
+        @if (Model.Nota is string nota)
+        {
+            <p class="secundario">@nota</p>
+        }
+        <form asp-action="Eliminar" asp-route-id="@Model.Id" method="post">
+            @if (Model.Confirmacion is string confirmacion)
+            {
+                <input type="hidden" name="confirmacion" value="@confirmacion" />
+            }
+            <div class="acciones">
+                <button class="boton boton-peligro" type="submit">Confirmar eliminación</button>
+                <a class="boton boton-contorno" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    }
+</section>

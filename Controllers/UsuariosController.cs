@@ -245,4 +245,61 @@ public class UsuariosController(
         ViewBag.IdUsuario = id;
         return View("Formulario", vm);
     }
+    [Authorize(Roles = "Administrador"), HttpGet]
+    public async Task<IActionResult> Eliminar(int id)
+    {
+        var registro = await db.Usuarios.FindAsync(id);
+        if (registro == null) return NotFound();
+
+        return View("ConfirmarEliminacion", new ConfirmarEliminacionVm(
+            id, "usuario", registro.Nombre, await MotivoBloqueo(id)));
+    }
+
+    [Authorize(Roles = "Administrador"), HttpPost, ActionName("Eliminar"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> EliminarConfirmado(int id)
+    {
+        if (!await AdministradorSigueActivo()) return Forbid();
+        var registro = await db.Usuarios.FindAsync(id);
+        if (registro == null) return NotFound();
+
+        var motivo = await MotivoBloqueo(id);
+        if (motivo != null)
+        {
+            TempData["Error"] = motivo;
+            return RedirectToAction(nameof(Eliminar), new { id });
+        }
+
+        db.Usuarios.Remove(registro);
+        RegistrarHistorial(id, "Eliminación", $"Se eliminó la cuenta {registro.Nombre}.");
+        try
+        {
+            await db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return NotFound();
+        }
+        catch (DbUpdateException ex)
+        {
+            HttpContext.RequestServices.GetRequiredService<ILogger<UsuariosController>>()
+                .LogError(ex, "Error al eliminar el registro {Id}", id);
+            TempData["Error"] = "No se pudo eliminar el registro. Revisa sus relaciones e inténtalo de nuevo.";
+            return RedirectToAction(nameof(Eliminar), new { id });
+        }
+
+        TempData["Exito"] = "Se eliminó el usuario correctamente.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    private async Task<string?> MotivoBloqueo(int id)
+    {
+        if (id == IdAdministrador) return "No puedes eliminar tu propia cuenta.";
+        if (await db.LecturasEnergia.AnyAsync(x => x.IdUsuario == id)
+            || await db.Incidencias.AnyAsync(x => x.IdReporta == id)
+            || await db.Reportes.AnyAsync(x => x.IdUsuario == id)
+            || await db.Historial.AnyAsync(x => x.IdUsuario == id))
+            return "La cuenta tiene registros asociados. Puedes desactivarla desde Editar.";
+
+        return null;
+    }
 }

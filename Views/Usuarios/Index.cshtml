@@ -50,7 +50,7 @@
                         <td>@usuario.Correo</td>
                         <td>@(usuario.Comunidad?.Nombre ?? "Sin comunidad")</td>
                         <td><span class="chip @(usuario.Activo ? "" : "chip-pendiente")">@(usuario.Activo ? "Activo" : "Inactivo")</span></td>
-                        <td><a asp-action="Editar" asp-route-id="@usuario.IdUsuario">Editar</a></td>
+                        <td><a asp-action="Editar" asp-route-id="@usuario.IdUsuario">Editar</a> <a asp-action="Eliminar" asp-route-id="@usuario.IdUsuario">Eliminar</a></td>
                     </tr>
                 }
             </tbody>

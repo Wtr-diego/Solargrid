@@ -75,4 +75,55 @@ public class EquiposController(SolarGridDbContext db, ILogger<EquiposController>
         TempData["Exito"] = "Equipo actualizado correctamente.";
         return RedirectToAction(nameof(Index));
     }
+    [Authorize(Roles = "Administrador"), HttpGet]
+    public async Task<IActionResult> Eliminar(int id)
+    {
+        var registro = await db.Equipos.FindAsync(id);
+        if (registro == null) return NotFound();
+
+        return View("ConfirmarEliminacion", new ConfirmarEliminacionVm(
+            id, "equipo", registro.Codigo, await MotivoBloqueo(id), "Si el panel tiene ubicación guardada, también se quitará su marcador."));
+    }
+
+    [Authorize(Roles = "Administrador"), HttpPost, ActionName("Eliminar"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> EliminarConfirmado(int id)
+    {
+        var registro = await db.Equipos.FindAsync(id);
+        if (registro == null) return NotFound();
+
+        var motivo = await MotivoBloqueo(id);
+        if (motivo != null)
+        {
+            TempData["Error"] = motivo;
+            return RedirectToAction(nameof(Eliminar), new { id });
+        }
+
+        db.Equipos.Remove(registro);
+        try
+        {
+            await db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return NotFound();
+        }
+        catch (DbUpdateException ex)
+        {
+            HttpContext.RequestServices.GetRequiredService<ILogger<EquiposController>>()
+                .LogError(ex, "Error al eliminar el registro {Id}", id);
+            TempData["Error"] = "No se pudo eliminar el registro. Revisa sus relaciones e inténtalo de nuevo.";
+            return RedirectToAction(nameof(Eliminar), new { id });
+        }
+
+        TempData["Exito"] = "Se eliminó el equipo correctamente.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    private async Task<string?> MotivoBloqueo(int id)
+    {
+        if (await db.Incidencias.AnyAsync(x => x.IdEquipo == id))
+            return "El registro tiene datos asociados que deben conservarse.";
+
+        return null;
+    }
 }
