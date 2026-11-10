@@ -97,4 +97,38 @@ public class IncidenciasController(SolarGridDbContext db, ILogger<IncidenciasCon
         TempData["Exito"] = "Estado de incidencia actualizado.";
         return RedirectToAction(nameof(Index));
     }
+
+    [Authorize(Roles = "Administrador,Tecnico"), HttpGet]
+    public async Task<IActionResult> Completar(int id)
+    {
+        var incidencia = await db.Incidencias.AsNoTracking().Include(i => i.Sistema)
+            .SingleOrDefaultAsync(i => i.IdIncidencia == id);
+        return incidencia == null ? NotFound() : View(incidencia);
+    }
+
+    [Authorize(Roles = "Administrador,Tecnico"), HttpPost, ActionName("Completar"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> CompletarConfirmado(int id)
+    {
+        var incidencia = await db.Incidencias.FindAsync(id);
+        if (incidencia == null) return NotFound();
+
+        db.Incidencias.Remove(incidencia);
+        try
+        {
+            await db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return NotFound();
+        }
+        catch (DbUpdateException ex)
+        {
+            logger.LogError(ex, "Error al completar la incidencia {IdIncidencia}", id);
+            TempData["Error"] = "No se pudo completar la incidencia. Intenta de nuevo.";
+            return RedirectToAction(nameof(Completar), new { id });
+        }
+
+        TempData["Exito"] = "Incidencia completada y eliminada.";
+        return RedirectToAction(nameof(Index));
+    }
 }

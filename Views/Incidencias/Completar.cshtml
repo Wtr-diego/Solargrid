@@ -1,0 +1,14 @@
+@model Incidencia
+@{ ViewData["Title"] = "Completar incidencia"; }
+
+<section class="tarjeta formulario">
+    <h1>Completar incidencia</h1>
+    <p><strong>@Model.Sistema.Nombre:</strong> @Model.Descripcion</p>
+    <p>Al confirmar, la incidencia y su seguimiento se eliminarán de forma permanente.</p>
+    <form asp-action="Completar" asp-route-id="@Model.IdIncidencia" method="post">
+        <div class="acciones">
+            <button class="boton boton-peligro" type="submit">Completar y eliminar</button>
+            <a class="boton boton-contorno" asp-action="Index">Cancelar</a>
+        </div>
+    </form>
+</section>
