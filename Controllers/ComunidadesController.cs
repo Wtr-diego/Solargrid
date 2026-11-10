@@ -23,6 +23,8 @@ public class ComunidadesController(SolarGridDbContext db, ILogger<ComunidadesCon
                 {
                     IdEquipo = e.IdEquipo,
                     Codigo = e.Codigo,
+                    Marca = e.Marca,
+                    Modelo = e.Modelo,
                     Estado = e.Estado,
                     Sistema = e.Sistema.Nombre,
                     Comunidad = e.Sistema.Comunidad.Nombre,

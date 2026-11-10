@@ -11,7 +11,7 @@ using SolarGrid.ViewModels;
 
 namespace SolarGrid.Controllers;
 
-public class CuentaController(SolarGridDbContext db, IPasswordHasher<Usuario> hasher) : Controller
+public class CuentaController(SolarGridDbContext db, IPasswordHasher<Usuario> hasher, ILogger<CuentaController> logger) : Controller
 {
     [AllowAnonymous, HttpGet]
     public IActionResult Ingresar(string? returnUrl = null)
@@ -61,7 +61,49 @@ public class CuentaController(SolarGridDbContext db, IPasswordHasher<Usuario> ha
     public IActionResult SinPermiso() => View();
 
     [AllowAnonymous, HttpGet]
-    public IActionResult OlvideContrasena() => View();
+    public IActionResult OlvideContrasena() => View(new SolicitudRecuperacionVm());
+
+    [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> OlvideContrasena(SolicitudRecuperacionVm vm)
+    {
+        var digitos = vm.Telefono?.Count(char.IsAsciiDigit) ?? 0;
+        if (digitos is < 8 or > 15)
+            ModelState.AddModelError(nameof(vm.Telefono), "El número debe tener entre 8 y 15 dígitos.");
+        if (!ModelState.IsValid) return View(vm);
+
+        var correo = vm.Correo.Trim().ToLowerInvariant();
+        try
+        {
+            await using var transaccion = await db.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
+            var usuario = await db.Usuarios.AsNoTracking()
+                .SingleOrDefaultAsync(u => u.Activo && u.Correo.ToLower() == correo);
+            if (usuario != null)
+            {
+                var limite = DateTime.Now.AddMinutes(-15);
+                if (!await db.Historial.AnyAsync(h => h.Tabla == "Recuperacion" &&
+                    h.IdUsuario == usuario.IdUsuario && h.FechaHora >= limite))
+                {
+                    db.Historial.Add(new Historial
+                    {
+                        IdUsuario = usuario.IdUsuario,
+                        IdRegistro = usuario.IdUsuario,
+                        Tabla = "Recuperacion",
+                        Accion = "Solicitud",
+                        Detalle = vm.Telefono!.Trim()
+                    });
+                    await db.SaveChangesAsync();
+                }
+            }
+            await transaccion.CommitAsync();
+        }
+        catch (Exception ex) when (ex is DbUpdateException or System.Data.Common.DbException)
+        {
+            logger.LogWarning(ex, "No se pudo procesar una solicitud de recuperación.");
+        }
+
+        TempData["Exito"] = "Si el correo corresponde a una cuenta activa, el administrador podrá revisar tu solicitud. Si necesitas ayuda, contáctalo directamente.";
+        return RedirectToAction(nameof(OlvideContrasena));
+    }
 
     [Authorize, HttpGet]
     [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]

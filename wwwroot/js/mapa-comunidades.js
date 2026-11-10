@@ -63,9 +63,9 @@
       const informacion = document.createElement('div');
       informacion.className = 'info-panel-mapa';
       const nombre = document.createElement('strong');
-      nombre.textContent = p.Codigo;
+      nombre.textContent = p.NombreVisible;
       const detalle = document.createElement('span');
-      detalle.textContent = `${p.Comunidad} · ${p.Sistema}`;
+      detalle.textContent = `${p.Codigo} · ${p.Comunidad} · ${p.Sistema}`;
       const estadoUbicacion = document.createElement('span');
       estadoUbicacion.className = ubicados(p) ? 'chip chip-ubicado' : 'chip chip-pendiente';
       estadoUbicacion.textContent = ubicados(p) ? 'En el mapa' : 'Sin ubicación';

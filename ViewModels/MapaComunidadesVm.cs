@@ -10,6 +10,18 @@ public class MapaComunidadesVm
 
 public class PanelEnMapaVm
 {
+    public string Marca { get; set; } = "";
+    public string Modelo { get; set; } = "";
+
+    public string NombreVisible
+    {
+        get
+        {
+            var nombre = $"{Marca?.Trim()} {Modelo?.Trim()}".Trim();
+            return nombre.Length > 0 ? nombre : $"Panel {Codigo}";
+        }
+    }
+
     public int IdEquipo { get; set; }
     public string Codigo { get; set; } = "";
     public string Estado { get; set; } = "";

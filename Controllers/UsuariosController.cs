@@ -22,6 +22,16 @@ public class UsuariosController(
 
     [HttpGet]
     [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    public async Task<IActionResult> SolicitudesRecuperacion() => View(await db.Historial
+        .AsNoTracking()
+        .Include(h => h.Usuario)
+        .Where(h => h.Tabla == "Recuperacion")
+        .OrderByDescending(h => h.IdHistorial)
+        .Take(50)
+        .ToListAsync());
+
+    [HttpGet]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
     public async Task<IActionResult> Presencia([FromServices] PresenciaUsuarios presencia)
     {
         var activos = await db.Usuarios.Where(u => u.Activo).Select(u => u.IdUsuario).ToListAsync();
@@ -285,6 +295,10 @@ public class UsuariosController(
             return RedirectToAction(nameof(Eliminar), new { id });
         }
 
+        var solicitudes = await db.Historial
+            .Where(h => h.IdUsuario == id && h.Tabla == "Recuperacion")
+            .ToListAsync();
+        db.Historial.RemoveRange(solicitudes);
         db.Usuarios.Remove(registro);
         RegistrarHistorial(id, "Eliminación", $"Se eliminó la cuenta {registro.Nombre}.");
         try
@@ -313,7 +327,7 @@ public class UsuariosController(
         if (await db.LecturasEnergia.AnyAsync(x => x.IdUsuario == id)
             || await db.Incidencias.AnyAsync(x => x.IdReporta == id)
             || await db.Reportes.AnyAsync(x => x.IdUsuario == id)
-            || await db.Historial.AnyAsync(x => x.IdUsuario == id))
+            || await db.Historial.AnyAsync(x => x.IdUsuario == id && x.Tabla != "Recuperacion"))
             return "La cuenta tiene registros asociados. Puedes desactivarla desde Editar.";
 
         return null;

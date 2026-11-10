@@ -1,10 +1,19 @@
+@model SolicitudRecuperacionVm
 @{ ViewData["Title"] = "Recuperar acceso"; }
 
 <div class="centrado">
     <section class="tarjeta login">
         <h1>Recuperar acceso</h1>
-        <p>Contacta al administrador de SolarGrid e indícale el correo con el que ingresas.</p>
-        <p>Una vez que verifique tu identidad, podrá restablecer tu contraseña.</p>
+        <p>Indica el correo de tu cuenta y un teléfono donde el administrador pueda contactarte para verificar tu identidad.</p>
+        <form asp-action="OlvideContrasena" method="post">
+            <label asp-for="Correo">Correo electrónico</label>
+            <input asp-for="Correo" type="email" autocomplete="email" required />
+            <span asp-validation-for="Correo" class="errores"></span>
+            <label asp-for="Telefono">Número de teléfono</label>
+            <input asp-for="Telefono" type="tel" autocomplete="tel" maxlength="24" required />
+            <span asp-validation-for="Telefono" class="errores"></span>
+            <button class="boton boton-primario ancho" type="submit">Enviar solicitud</button>
+        </form>
         <a class="boton boton-contorno" asp-action="Ingresar">Volver al inicio de sesión</a>
     </section>
 </div>
